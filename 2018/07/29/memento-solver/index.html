@@ -12,18 +12,20 @@
     
         <meta name="keywords" content="游戏,python,兴趣" />
     
-    <meta name="description" content="&amp;lt;% toc(page.content) %&amp;gt; To the Moon 记忆碎片解谜引言记忆碎片（Memento）是游戏《去月球》（To the Moon）中的一个解谜小游戏。基本规则已在游戏中介绍。即通过点击按钮翻转某一行、列或者对角线，直至所有碎片都转成同一面。 这个解谜与成就/剧情分支无关，而且谜题设置比较简单，比较适合自己玩。谜题也非随机生成，答案都可以在网上找到。 兴趣使然地">
+    <meta name="description" content="&amp;lt;%- toc(page.content) %&amp;gt; 引言记忆碎片（Memento）是游戏《去月球》（To the Moon）中的一个解谜小游戏。基本规则已在游戏中介绍。即通过点击按钮翻转某一行、列或者对角线，直至所有碎片都转成同一面。  这个解谜与成就/剧情分支无关，而且谜题设置比较简单，比较适合自己玩。谜题也非随机生成，答案都可以在网上找到。 兴趣使然地写了一个编程通用解法。在此介绍一">
 <meta name="keywords" content="游戏,python,兴趣">
 <meta property="og:type" content="article">
 <meta property="og:title" content="编程解决《去月球》 To the Moon 记忆碎片小游戏">
 <meta property="og:url" content="http://crvdgc.me/2018/07/29/memento-solver/index.html">
 <meta property="og:site_name" content="Down to the Rabbit Hole">
-<meta property="og:description" content="&amp;lt;% toc(page.content) %&amp;gt; To the Moon 记忆碎片解谜引言记忆碎片（Memento）是游戏《去月球》（To the Moon）中的一个解谜小游戏。基本规则已在游戏中介绍。即通过点击按钮翻转某一行、列或者对角线，直至所有碎片都转成同一面。 这个解谜与成就/剧情分支无关，而且谜题设置比较简单，比较适合自己玩。谜题也非随机生成，答案都可以在网上找到。 兴趣使然地">
+<meta property="og:description" content="&amp;lt;%- toc(page.content) %&amp;gt; 引言记忆碎片（Memento）是游戏《去月球》（To the Moon）中的一个解谜小游戏。基本规则已在游戏中介绍。即通过点击按钮翻转某一行、列或者对角线，直至所有碎片都转成同一面。  这个解谜与成就/剧情分支无关，而且谜题设置比较简单，比较适合自己玩。谜题也非随机生成，答案都可以在网上找到。 兴趣使然地写了一个编程通用解法。在此介绍一">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-28T17:30:06.072Z">
+<meta property="og:image" content="http://crvdgc.me/2018/07/29/memento-solver/puzzle.png">
+<meta property="og:updated_time" content="2018-07-28T17:33:07.617Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="编程解决《去月球》 To the Moon 记忆碎片小游戏">
-<meta name="twitter:description" content="&amp;lt;% toc(page.content) %&amp;gt; To the Moon 记忆碎片解谜引言记忆碎片（Memento）是游戏《去月球》（To the Moon）中的一个解谜小游戏。基本规则已在游戏中介绍。即通过点击按钮翻转某一行、列或者对角线，直至所有碎片都转成同一面。 这个解谜与成就/剧情分支无关，而且谜题设置比较简单，比较适合自己玩。谜题也非随机生成，答案都可以在网上找到。 兴趣使然地">
+<meta name="twitter:description" content="&amp;lt;%- toc(page.content) %&amp;gt; 引言记忆碎片（Memento）是游戏《去月球》（To the Moon）中的一个解谜小游戏。基本规则已在游戏中介绍。即通过点击按钮翻转某一行、列或者对角线，直至所有碎片都转成同一面。  这个解谜与成就/剧情分支无关，而且谜题设置比较简单，比较适合自己玩。谜题也非随机生成，答案都可以在网上找到。 兴趣使然地写了一个编程通用解法。在此介绍一">
+<meta name="twitter:image" content="http://crvdgc.me/2018/07/29/memento-solver/puzzle.png">
     
 
     
@@ -164,8 +166,9 @@
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>&lt;% toc(page.content) %&gt;</p>
-<h1 id="To-the-Moon-记忆碎片解谜"><a href="#To-the-Moon-记忆碎片解谜" class="headerlink" title="To the Moon 记忆碎片解谜"></a>To the Moon 记忆碎片解谜</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>记忆碎片（Memento）是游戏《去月球》（To the Moon）中的一个解谜小游戏。基本规则已在游戏中介绍。即通过点击按钮翻转某一行、列或者对角线，直至所有碎片都转成同一面。</p>
+            <p>&lt;%- toc(page.content) %&gt;</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>记忆碎片（Memento）是游戏《去月球》（To the Moon）中的一个解谜小游戏。基本规则已在游戏中介绍。即通过点击按钮翻转某一行、列或者对角线，直至所有碎片都转成同一面。</p>
+<img src="/2018/07/29/memento-solver/puzzle.png" title="记忆碎片游戏">
 <p>这个解谜与成就/剧情分支无关，而且谜题设置比较简单，比较适合自己玩。谜题也非随机生成，答案都可以在网上找到。</p>
 <p>兴趣使然地写了一个编程通用解法。在此介绍一下。</p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>注意到同一位置进行任意偶数次变换都等价于不变，而奇数次变换等价于进行 1 次。为使总变换次数最少，只需决定每个位置是否进行变换即可。</p>
@@ -438,7 +441,7 @@ solve_memento()
                             <a href="/2018/07/29/memento-solver/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/2018/07/29/memento-solver/puzzle.png)" alt="编程解决《去月球》 To the Moon 记忆碎片小游戏" class="thumbnail-image"></span>
     
     
 </a>
