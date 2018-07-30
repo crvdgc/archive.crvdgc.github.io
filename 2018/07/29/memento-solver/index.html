@@ -21,7 +21,7 @@
 <meta property="og:description" content="引言记忆碎片（Memento）是游戏《去月球》（To the Moon）中的一个解谜小游戏。基本规则已在游戏中介绍。即通过点击按钮翻转某一行、列或者对角线，直至所有碎片都转成同一面。  这个解谜与成就/剧情分支无关，而且谜题设置比较简单，比较适合自己玩。谜题也非随机生成，答案都可以在网上找到。 兴趣使然地写了一个编程通用解法。在此介绍一下。 分析注意到同一位置进行任意偶数次变换都等价于不变，而奇数">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://crvdgc.me/2018/07/29/memento-solver/puzzle.png">
-<meta property="og:updated_time" content="2018-07-30T07:02:44.617Z">
+<meta property="og:updated_time" content="2018-07-30T07:11:09.421Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="编程解决《去月球》 To the Moon 记忆碎片小游戏">
 <meta name="twitter:description" content="引言记忆碎片（Memento）是游戏《去月球》（To the Moon）中的一个解谜小游戏。基本规则已在游戏中介绍。即通过点击按钮翻转某一行、列或者对角线，直至所有碎片都转成同一面。  这个解谜与成就/剧情分支无关，而且谜题设置比较简单，比较适合自己玩。谜题也非随机生成，答案都可以在网上找到。 兴趣使然地写了一个编程通用解法。在此介绍一下。 分析注意到同一位置进行任意偶数次变换都等价于不变，而奇数">
@@ -181,12 +181,8 @@
 <p>接下来我们只需要枚举所有可能的解决方案，并将其中正确的挑选出来即可。</p>
 <p>游戏中给出了最佳步数，因此可以作为加速搜索的方式，一旦解决方案中，变换的次数超过最佳步数，则跳过。这样，整个搜索空间大小从 2^N 减小到了 C(N, B) ，其中 B 是最佳变换次数， C 是组合数。</p>
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>首先处理输入，我们将输入的图形转换为一个布尔矩阵。</p>
-<pre><code>rowNum = int(input(&apos;Row number: &apos;))
-colNum = int(input(&apos;Col number: &apos;))
-best = int(input(&apos;Best move: &apos;))
-print(&quot;Input table, 1 for solved, 0 for unsolved&quot;)
-table = [list(map(lambda x: True if int(x) == 1 else False, input().split())) for i in range(rowNum)]
-</code></pre><p>接下来定义一些工具函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rowNum = int(input(<span class="string">'Row number: '</span>))</span><br><span class="line">colNum = int(input(<span class="string">'Col number: '</span>))</span><br><span class="line">best = int(input(<span class="string">'Best move: '</span>))</span><br><span class="line">print(<span class="string">"Input table, 1 for solved, 0 for unsolved"</span>)</span><br><span class="line">table = [list(map(<span class="keyword">lambda</span> x: <span class="keyword">True</span> <span class="keyword">if</span> int(x) == <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">False</span>, input().split())) <span class="keyword">for</span> i <span class="keyword">in</span> range(rowNum)]</span><br></pre></td></tr></table></figure>
+<p>接下来定义一些工具函数：</p>
 <pre><code>def check():
     return all([all(row) for row in table])
 
@@ -439,15 +435,6 @@ solve_memento()
         
             
                 
-<div class="widget-wrap widget-list">
-    <h3 class="widget-title">目录</h3>
-    <div class="widget">
-        <div id="toc" class="toc-article">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分析"><span class="toc-number">2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现"><span class="toc-number">3.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-number">4.</span> <span class="toc-text">测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#附注"><span class="toc-number">5.</span> <span class="toc-text">附注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#itertools-product"><span class="toc-number">5.1.</span> <span class="toc-text">itertools.product</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局依赖"><span class="toc-number">5.2.</span> <span class="toc-text">全局依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#完整代码"><span class="toc-number">5.3.</span> <span class="toc-text">完整代码</span></a></li></ol></li></ol>
-        </div>
-    </div>
-</div>
-
 
             
                 
