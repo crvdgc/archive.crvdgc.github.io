@@ -6,17 +6,26 @@
     
 
     
-    <title>标签：: 长依赖 | Down to the Rabbit Hole</title>
+    <title>论文解读 Recurrent neural network based language model | Down to the Rabbit Hole</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Down to the Rabbit Hole">
-<meta property="og:url" content="http://crvdgc.me/tags/长依赖/index.html">
+        <meta name="keywords" content="RNN,NLP" />
+    
+    <meta name="description" content="Annotation: Recurrent neural network based language model作者Tomas MikolovMartin KarafiatLukas BurgetJan “Honza” CernockSanjeev Khudanpur 摘要 块引用表示评论。  本文提出了一个基于 RNN 的语言模型（RNN LM）。实验表明与 backoff 语言模型相比，困惑">
+<meta name="keywords" content="RNN,NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文解读 Recurrent neural network based language model">
+<meta property="og:url" content="http://crvdgc.me/2018/07/31/rnnlm/index.html">
 <meta property="og:site_name" content="Down to the Rabbit Hole">
+<meta property="og:description" content="Annotation: Recurrent neural network based language model作者Tomas MikolovMartin KarafiatLukas BurgetJan “Honza” CernockSanjeev Khudanpur 摘要 块引用表示评论。  本文提出了一个基于 RNN 的语言模型（RNN LM）。实验表明与 backoff 语言模型相比，困惑">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://crvdgc.me/2018/07/31/rnnlm/fig1.png">
+<meta property="og:updated_time" content="2018-08-01T06:12:57.963Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Down to the Rabbit Hole">
+<meta name="twitter:title" content="论文解读 Recurrent neural network based language model">
+<meta name="twitter:description" content="Annotation: Recurrent neural network based language model作者Tomas MikolovMartin KarafiatLukas BurgetJan “Honza” CernockSanjeev Khudanpur 摘要 块引用表示评论。  本文提出了一个基于 RNN 的语言模型（RNN LM）。实验表明与 backoff 语言模型相比，困惑">
+<meta name="twitter:image" content="http://crvdgc.me/2018/07/31/rnnlm/fig1.png">
     
 
     
@@ -125,76 +134,140 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-tag"></i>标签：: <em>长依赖</em>
+    <a class="page-title-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/计算机/人工智能/">人工智能</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-rnnlm" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2018" class="archive-year"><i class="icon fa fa-calendar-o"></i>2018</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/07/30/learning-long-term/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/2018/07/30/learning-long-term/fig1.png)" alt="论文解读 Learning Long-Term Dependencies with Gradient Descent is Difficult" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://crvdgc.me/2018/07/30/learning-long-term/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/计算机/人工智能/">人工智能</a>
-            </div>
-            <div class="date"><time datetime="2018-07-30T10:34:49.000Z" itemprop="datePublished">2018-07-30</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/07/30/learning-long-term/">论文解读 Learning Long-Term Dependencies with Gradient Descent is Difficult</a>
+        论文解读 Recurrent neural network based language model
         </h1>
     
 
-        <p class="article-excerpt">
-            作者Yoshua Bengio, Patrice Simard, and Paolo Frasconi
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/07/31/rnnlm/" class="article-date">
+            <time datetime="2018-07-31T10:38:18.000Z" itemprop="datePublished">2018-07-31</time>
+        </a>
+    </div>
 
-以下介绍中，块引用代表评论。
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/RNN/">RNN</a>
+    </div>
 
-摘要指出了 RNN 所面临的问题： temporal contingencies present in the input/output sequences span intervals ，也就是所谓的长依赖问题（long-term dependencies）。
-        </p>
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="Annotation-Recurrent-neural-network-based-language-model"><a href="#Annotation-Recurrent-neural-network-based-language-model" class="headerlink" title="Annotation: Recurrent neural network based language model"></a>Annotation: Recurrent neural network based language model</h1><h2 id="作者"><a href="#作者" class="headerlink" title="作者"></a>作者</h2><p>Tomas Mikolov<br>Martin Karafiat<br>Lukas Burget<br>Jan “Honza” Cernock<br>Sanjeev Khudanpur</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><blockquote>
+<p>块引用表示评论。</p>
+</blockquote>
+<p>本文提出了一个基于 RNN 的语言模型（RNN LM）。实验表明与 backoff 语言模型相比，困惑度（perplexity）可能下降 50% 。</p>
+<blockquote>
+<p>简单直接提出 RNN LM ，使用大量实验证明和 n-gram 相比效果不错（缺点是训练复杂度比较高）。<br>由于模型比较简单，因此在最后的评论中直接概括一下。这篇论文的引言写得十分精彩，对问题的分析一针见血。（当然说得这么坚定也有实验效果撑着呢，想必下笔的时候也是激动万分。）我十分喜欢，主要呈现一下这部分。</p>
+</blockquote>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>构建语言模型，就是处理序列预测问题（sequential data prediction）。然而，很多自然语言方法都针对于特定的语言领域（very specific for language domain）：假设自然语言可以使用分析树（parse tree）来表示，需要考虑词的形态学（morphology）、语法和语义。即使是基于 n-gram 的最通用的模型，也进行了假设：语言是由原子性的符号（也就是单词）序列（也就是句子）所组成的。句子的结尾起着十分重要且特殊的作用。</p>
+<blockquote>
+<p>特定于语言领域这个观察十分有道理。 n-gram 以句子为单位本身已经带有很强的假设，给予了“句子”一个很高的地位，因此也就无法对句间关系建模。然而衡量语言模型好像没有不用句子假设的，即使是下面提出的 RNN 也是如此。这一段可能是为了反衬 RNN 的泛用性。</p>
+</blockquote>
+<p>对简单的 n-gram 研究到底有没有取得显著进步，值得怀疑。如果从序列预测数据的角度来看，的确取得了很大进步。主要靠 cache models （描述长语境信息）和 class-based models （通过相似词之间共享参数改进短语境的参数估计）。其他进步大多能归结到这两类的效果上。</p>
+<p>如果从实际应用的角度来看，那么几乎没有进展。真实世界中的语音识别和机器翻译的系统都是建立在大量的数据上的，一种流行的说法是我们只需要更多的数据就够了。学术界的模型通常很复杂并且仅仅在基于数量十分有限的数据集上效果才好。事实上，大多数的先进技术只比简单的 baseline 提高了一点，且很少在实际中使用。</p>
+<blockquote>
+<p>满满的即视感。不过 RNN 带来的提升的确离现实应用近了一大步。</p>
+</blockquote>
+<h2 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h2><h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><img src="/2018/07/31/rnnlm/fig1.png" title="Fig. 1">
+<p>本篇的模型十分朴素，是一个简单的三层 RNN 。Token 使用的是 one-hot 编码。输入层使用单词编码和隐藏层进行拼接。隐藏层使用 sigmoid 激活函数，输出层使用 softmax 。训练算法是 truncated backpropagation through time ， SGD 。如果没有明显改善，学习率每个 epoch 减半。</p>
+<h3 id="Dynamic"><a href="#Dynamic" class="headerlink" title="Dynamic"></a>Dynamic</h3><p>模型中一个比较有趣的地方（也是读这篇论文的原因）是使用了 dynamic 的方法。主要区别于传统的 static 方法。Static 指的是模型在训练阶段结束之后，将参数固定，在测试过程中不再改变。Dynamic 方法则是在测试时，利用训练的真实标签继续更新参数。关于这到底算不算偷看测试数据还有争议。不过这一方法在最开始这篇论文中已经得到应用了。</p>
+<p>使用 dynamic 的一个要求是按一定顺序访问数据和标签，因此也符合实际应用时的特点。一种错误的用法是在测试一个序列中的一个位置时，将其他位置的信息全部作为已知。</p>
+<p>作者指出，效果和 cache 类似，但由于其在连续空间中学习，如果两个词之间联系比较紧密，那么测试数据中一个单词的频繁出现也会提高另一个单词出现概率。</p>
+<h3 id="全文"><a href="#全文" class="headerlink" title="全文"></a>全文</h3><p>作者认为 RNN 相比于 Bengio [3] 中的 FNN 的主要优势在于没有指定固定的语境，而是使用隐藏层的状态概括之前所有的语境信息。优点包括需要指定的超参数数量少，通用性强。缺点是难以捕捉长依赖问题，早在 1994 年的 [6] 中就已经指出了。解读请看<a href="/2018/07/30/learning-long-term/" title="这篇博客">这篇博客</a>。</p>
+<p>本篇将 RNN LM 引入 NLP ，使用的是最朴素的模型（本文发表于 2010 年）。实验发现其效果远好于（各种） n-gram 。（从之后的发展来看，几乎将 n-gram 送入历史的废纸堆了）。这一巨大的提升，打破了语言模型是关于各种 n-gram 以及只要有大量的数据就可以提升效果的神话。（结果现在出现了各种复杂的神经网络模型，以及只要有大量数据就可以提升效果的神话x）</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://crvdgc.me/2018/07/31/rnnlm/" data-id="cjkaqljws0005qtsx0mhwilkv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
     </div>
 </article>
-    
-        </div>
-    
 
-
-    </div></section>
+    <section id="comments">
+    
+    </section>
 
 
 
@@ -232,6 +305,19 @@
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/07/30/learning-long-term/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">论文解读 Learning Long-Term Dependencies with Gradient Descent is Difficult</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
