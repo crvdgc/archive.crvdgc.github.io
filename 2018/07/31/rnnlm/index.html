@@ -20,12 +20,10 @@
 <meta property="og:site_name" content="Down to the Rabbit Hole">
 <meta property="og:description" content="Annotation: Recurrent neural network based language model作者Tomas MikolovMartin KarafiatLukas BurgetJan “Honza” CernockSanjeev Khudanpur 摘要 块引用表示评论。  本文提出了一个基于 RNN 的语言模型（RNN LM）。实验表明与 backoff 语言模型相比，困惑">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://crvdgc.me/2018/07/31/rnnlm/fig1.png">
-<meta property="og:updated_time" content="2018-08-01T06:12:57.963Z">
+<meta property="og:updated_time" content="2018-08-01T06:38:57.869Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文解读 Recurrent neural network based language model">
 <meta name="twitter:description" content="Annotation: Recurrent neural network based language model作者Tomas MikolovMartin KarafiatLukas BurgetJan “Honza” CernockSanjeev Khudanpur 摘要 块引用表示评论。  本文提出了一个基于 RNN 的语言模型（RNN LM）。实验表明与 backoff 语言模型相比，困惑">
-<meta name="twitter:image" content="http://crvdgc.me/2018/07/31/rnnlm/fig1.png">
     
 
     
@@ -187,13 +185,17 @@
 <blockquote>
 <p>满满的即视感。不过 RNN 带来的提升的确离现实应用近了一大步。</p>
 </blockquote>
-<h2 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h2><h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><img src="/2018/07/31/rnnlm/fig1.png" title="Fig. 1">
-<p>本篇的模型十分朴素，是一个简单的三层 RNN 。Token 使用的是 one-hot 编码。输入层使用单词编码和隐藏层进行拼接。隐藏层使用 sigmoid 激活函数，输出层使用 softmax 。训练算法是 truncated backpropagation through time ， SGD 。如果没有明显改善，学习率每个 epoch 减半。</p>
-<h3 id="Dynamic"><a href="#Dynamic" class="headerlink" title="Dynamic"></a>Dynamic</h3><p>模型中一个比较有趣的地方（也是读这篇论文的原因）是使用了 dynamic 的方法。主要区别于传统的 static 方法。Static 指的是模型在训练阶段结束之后，将参数固定，在测试过程中不再改变。Dynamic 方法则是在测试时，利用训练的真实标签继续更新参数。关于这到底算不算偷看测试数据还有争议。不过这一方法在最开始这篇论文中已经得到应用了。</p>
-<p>使用 dynamic 的一个要求是按一定顺序访问数据和标签，因此也符合实际应用时的特点。一种错误的用法是在测试一个序列中的一个位置时，将其他位置的信息全部作为已知。</p>
+<h2 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h2><h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p>本篇的模型十分朴素，是一个简单的三层 RNN 。Token 使用的是 one-hot 编码。输入层使用单词编码和隐藏层进行拼接。隐藏层使用 sigmoid 激活函数，输出层使用 softmax 。训练算法是 truncated backpropagation through time ， SGD 。如果没有明显改善，学习率每个 epoch 减半。</p>
+<h3 id="Dynamic"><a href="#Dynamic" class="headerlink" title="Dynamic"></a>Dynamic</h3><p>模型中一个比较有趣的地方（也是读这篇论文的原因）是使用了 dynamic 的方法。主要区别于传统的 static 方法。Static 指的是模型在训练阶段结束之后，将参数固定，在测试过程中不再改变。Dynamic 方法则是在测试时，利用训练的真实标签继续更新参数。</p>
+<p>这种做法的一个结果是不再显式地区分训练集与测试集，因为所有的数据都只处理一次。</p>
+<p>(Graves, 2013)[^n] 中指出了 dynamic evaluation 比本篇论文报告的效果更好。</p>
 <p>作者指出，效果和 cache 类似，但由于其在连续空间中学习，如果两个词之间联系比较紧密，那么测试数据中一个单词的频繁出现也会提高另一个单词出现概率。</p>
-<h3 id="全文"><a href="#全文" class="headerlink" title="全文"></a>全文</h3><p>作者认为 RNN 相比于 Bengio [3] 中的 FNN 的主要优势在于没有指定固定的语境，而是使用隐藏层的状态概括之前所有的语境信息。优点包括需要指定的超参数数量少，通用性强。缺点是难以捕捉长依赖问题，早在 1994 年的 [6] 中就已经指出了。解读请看<a href="/2018/07/30/learning-long-term/" title="这篇博客">这篇博客</a>。</p>
+<p>另一篇专注研究 dynamic evaluation 的论文解读请看 。</p>
+<h3 id="全文"><a href="#全文" class="headerlink" title="全文"></a>全文</h3><p>作者认为 RNN 相比于 Bengio [3][^n] 中的 FNN 的主要优势在于没有指定固定的语境，而是使用隐藏层的状态概括之前所有的语境信息。优点包括需要指定的超参数数量少，通用性强。缺点是难以捕捉长依赖问题，早在 1994 年的 [6][^n] 中就已经指出了。解读请看<a href="/2018/07/30/learning-long-term/" title="这篇博客">这篇博客</a>。</p>
 <p>本篇将 RNN LM 引入 NLP ，使用的是最朴素的模型（本文发表于 2010 年）。实验发现其效果远好于（各种） n-gram 。（从之后的发展来看，几乎将 n-gram 送入历史的废纸堆了）。这一巨大的提升，打破了语言模型是关于各种 n-gram 以及只要有大量的数据就可以提升效果的神话。（结果现在出现了各种复杂的神经网络模型，以及只要有大量数据就可以提升效果的神话x）</p>
+<p>[^n]: Graves, Alex. “Generating sequences with recurrent neural networks.” arXiv preprint arXiv:1308.0850 (2013).</p>
+<p>[^n]: Yoshua Bengio, Rejean Ducharme and Pascal Vincent. 2003. A<br>neural probabilistic language model. Journal of Machine Learning<br>Research, 3:1137-1155</p>
+<p>[^n]:  Yoshua Bengio and Patrice Simard and Paolo Frasconi. Learning Long-Term Dependencies with Gradient Descent is Difficult.<br>IEEE Transactions on Neural Networks, 5, 157-166.</p>
 
         </div>
         <footer class="article-footer">
@@ -337,7 +339,7 @@
                             <a href="/2018/07/31/rnnlm/" class="thumbnail">
     
     
-        <span style="background-image:url(/2018/07/31/rnnlm/fig1.png)" alt="论文解读 Recurrent neural network based language model" class="thumbnail-image"></span>
+        <span class="thumbnail-image thumbnail-none"></span>
     
     
 </a>
