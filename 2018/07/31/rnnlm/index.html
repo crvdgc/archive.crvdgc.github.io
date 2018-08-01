@@ -12,19 +12,19 @@
     
         <meta name="keywords" content="RNN,NLP" />
     
-    <meta name="description" content="Annotation: Recurrent neural network based language model ¶作者 Tomas Mikolov Martin Karafiat Lukas Burget Jan “Honza” Cernock Sanjeev Khudanpur ¶摘要  块引用表示评论。  本文提出了一个基于 RNN 的语言模型（RNN LM）。实验表明与 backoff">
+    <meta name="description" content="Annotation: Recurrent neural network based language model 作者 Tomas Mikolov Martin Karafiat Lukas Burget Jan “Honza” Cernock Sanjeev Khudanpur 摘要  块引用表示评论。  本文提出了一个基于 RNN 的语言模型（RNN LM）。实验表明与 backoff 语言">
 <meta name="keywords" content="RNN,NLP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文解读 Recurrent neural network based language model">
 <meta property="og:url" content="http://crvdgc.me/2018/07/31/rnnlm/index.html">
 <meta property="og:site_name" content="Down to the Rabbit Hole">
-<meta property="og:description" content="Annotation: Recurrent neural network based language model ¶作者 Tomas Mikolov Martin Karafiat Lukas Burget Jan “Honza” Cernock Sanjeev Khudanpur ¶摘要  块引用表示评论。  本文提出了一个基于 RNN 的语言模型（RNN LM）。实验表明与 backoff">
+<meta property="og:description" content="Annotation: Recurrent neural network based language model 作者 Tomas Mikolov Martin Karafiat Lukas Burget Jan “Honza” Cernock Sanjeev Khudanpur 摘要  块引用表示评论。  本文提出了一个基于 RNN 的语言模型（RNN LM）。实验表明与 backoff 语言">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://crvdgc.me/2018/07/31/rnnlm/fig1.png">
-<meta property="og:updated_time" content="2018-08-01T06:43:26.118Z">
+<meta property="og:updated_time" content="2018-08-01T06:51:36.993Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文解读 Recurrent neural network based language model">
-<meta name="twitter:description" content="Annotation: Recurrent neural network based language model ¶作者 Tomas Mikolov Martin Karafiat Lukas Burget Jan “Honza” Cernock Sanjeev Khudanpur ¶摘要  块引用表示评论。  本文提出了一个基于 RNN 的语言模型（RNN LM）。实验表明与 backoff">
+<meta name="twitter:description" content="Annotation: Recurrent neural network based language model 作者 Tomas Mikolov Martin Karafiat Lukas Burget Jan “Honza” Cernock Sanjeev Khudanpur 摘要  块引用表示评论。  本文提出了一个基于 RNN 的语言模型（RNN LM）。实验表明与 backoff 语言">
 <meta name="twitter:image" content="http://crvdgc.me/2018/07/31/rnnlm/fig1.png">
     
 
@@ -171,13 +171,13 @@
         
         <div class="article-entry" itemprop="articleBody">
             <h1>Annotation: Recurrent neural network based language model</h1>
-<h2 id="作者"><a class="header-anchor" href="#作者">¶</a>作者</h2>
+<h2>作者</h2>
 <p>Tomas Mikolov
 Martin Karafiat
 Lukas Burget
 Jan “Honza” Cernock
 Sanjeev Khudanpur</p>
-<h2 id="摘要"><a class="header-anchor" href="#摘要">¶</a>摘要</h2>
+<h2>摘要</h2>
 <blockquote>
 <p>块引用表示评论。</p>
 </blockquote>
@@ -186,7 +186,7 @@ Sanjeev Khudanpur</p>
 <p>简单直接提出 RNN LM ，使用大量实验证明和 n-gram 相比效果不错（缺点是训练复杂度比较高）。
 由于模型比较简单，因此在最后的评论中直接概括一下。这篇论文的引言写得十分精彩，对问题的分析一针见血。（当然说得这么坚定也有实验效果撑着呢，想必下笔的时候也是激动万分。）我十分喜欢，主要呈现一下这部分。</p>
 </blockquote>
-<h2 id="引言"><a class="header-anchor" href="#引言">¶</a>引言</h2>
+<h2>引言</h2>
 <p>构建语言模型，就是处理序列预测问题（sequential data prediction）。然而，很多自然语言方法都针对于特定的语言领域（very specific for language domain）：假设自然语言可以使用分析树（parse tree）来表示，需要考虑词的形态学（morphology）、语法和语义。即使是基于 n-gram 的最通用的模型，也进行了假设：语言是由原子性的符号（也就是单词）序列（也就是句子）所组成的。句子的结尾起着十分重要且特殊的作用。</p>
 <blockquote>
 <p>特定于语言领域这个观察十分有道理。 n-gram 以句子为单位本身已经带有很强的假设，给予了“句子”一个很高的地位，因此也就无法对句间关系建模。然而衡量语言模型好像没有不用句子假设的，即使是下面提出的 RNN 也是如此。这一段可能是为了反衬 RNN 的泛用性。</p>
@@ -196,24 +196,30 @@ Sanjeev Khudanpur</p>
 <blockquote>
 <p>满满的即视感。不过 RNN 带来的提升的确离现实应用近了一大步。</p>
 </blockquote>
-<h2 id="评论"><a class="header-anchor" href="#评论">¶</a>评论</h2>
-<h3 id="模型"><a class="header-anchor" href="#模型">¶</a>模型</h3>
+<h2>评论</h2>
+<h3>模型</h3>
 <img src="/2018/07/31/rnnlm/fig1.png" title="Fig. 1">
 <p>本篇的模型十分朴素，是一个简单的三层 RNN 。Token 使用的是 one-hot 编码。输入层使用单词编码和隐藏层进行拼接。隐藏层使用 sigmoid 激活函数，输出层使用 softmax 。训练算法是 truncated backpropagation through time ， SGD 。如果没有明显改善，学习率每个 epoch 减半。</p>
-<h3 id="dynamic"><a class="header-anchor" href="#dynamic">¶</a>Dynamic</h3>
+<h3>Dynamic</h3>
 <p>模型中一个比较有趣的地方（也是读这篇论文的原因）是使用了 dynamic 的方法。主要区别于传统的 static 方法。Static 指的是模型在训练阶段结束之后，将参数固定，在测试过程中不再改变。Dynamic 方法则是在测试时，利用训练的真实标签继续更新参数。</p>
 <p>这种做法的一个结果是不再显式地区分训练集与测试集，因为所有的数据都只处理一次。</p>
 <p>(Graves, 2013)<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> 中指出了 dynamic evaluation 比本篇论文报告的效果更好。</p>
 <p>作者指出，效果和 cache 类似，但由于其在连续空间中学习，如果两个词之间联系比较紧密，那么测试数据中一个单词的频繁出现也会提高另一个单词出现概率。</p>
 <p>另一篇专注研究 dynamic evaluation 的论文解读请看 。</p>
-<h3 id="全文"><a class="header-anchor" href="#全文">¶</a>全文</h3>
-<p>作者认为 RNN 相比于 Bengio [3]<sup class="footnote-ref"><a href="#fn1" id="fnref1:1">[1]</a></sup> 中的 FNN 的主要优势在于没有指定固定的语境，而是使用隐藏层的状态概括之前所有的语境信息。优点包括需要指定的超参数数量少，通用性强。缺点是难以捕捉长依赖问题，早在 1994 年的 [6]<sup class="footnote-ref"><a href="#fn1" id="fnref1:2">[1]</a></sup> 中就已经指出了。解读请看<a href="/2018/07/30/learning-long-term/" title="这篇博客">这篇博客</a>。</p>
+<h3>全文</h3>
+<p>作者认为 RNN 相比于 Bengio [3]<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> 中的 FNN 的主要优势在于没有指定固定的语境，而是使用隐藏层的状态概括之前所有的语境信息。优点包括需要指定的超参数数量少，通用性强。缺点是难以捕捉长依赖问题，早在 1994 年的 [6]<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> 中就已经指出了。解读请看<a href="/2018/07/30/learning-long-term/" title="这篇博客">这篇博客</a>。</p>
 <p>本篇将 RNN LM 引入 NLP ，使用的是最朴素的模型（本文发表于 2010 年）。实验发现其效果远好于（各种） n-gram 。（从之后的发展来看，几乎将 n-gram 送入历史的废纸堆了）。这一巨大的提升，打破了语言模型是关于各种 n-gram 以及只要有大量的数据就可以提升效果的神话。（结果现在出现了各种复杂的神经网络模型，以及只要有大量数据就可以提升效果的神话x）</p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>Yoshua Bengio and Patrice Simard and Paolo Frasconi. Learning Long-Term Dependencies with Gradient Descent is Difficult.
-IEEE Transactions on Neural Networks, 5, 157-166. <a href="#fnref1" class="footnote-backref">↩</a> <a href="#fnref1:1" class="footnote-backref">↩</a> <a href="#fnref1:2" class="footnote-backref">↩</a></p>
+<li id="fn1" class="footnote-item"><p>Graves, Alex. “Generating sequences with recurrent neural networks.” arXiv preprint arXiv:1308.0850 (2013). <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>Yoshua Bengio, Rejean Ducharme and Pascal Vincent. 2003. A
+neural probabilistic language model. Journal of Machine Learning
+Research, 3:1137-1155 <a href="#fnref2" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>Yoshua Bengio and Patrice Simard and Paolo Frasconi. Learning Long-Term Dependencies with Gradient Descent is Difficult.
+IEEE Transactions on Neural Networks, 5, 157-166. <a href="#fnref3" class="footnote-backref">↩</a></p>
 </li>
 </ol>
 </section>
