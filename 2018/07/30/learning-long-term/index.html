@@ -12,19 +12,19 @@
     
         <meta name="keywords" content="RNN,长依赖" />
     
-    <meta name="description" content="作者Yoshua Bengio, Patrice Simard, and Paolo Frasconi  以下介绍中，块引用代表评论。  摘要指出了 RNN 所面临的问题： temporal contingencies present in the input/output sequences span intervals ，也就是所谓的长依赖问题（long-term dependencies）。">
+    <meta name="description" content="作者 Yoshua Bengio, Patrice Simard, and Paolo Frasconi  以下介绍中，块引用代表评论。  摘要 指出了 RNN 所面临的问题： temporal contingencies present in the input/output sequences span intervals ，也就是所谓的长依赖问题（long-term dependencies">
 <meta name="keywords" content="RNN,长依赖">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文解读 Learning Long-Term Dependencies with Gradient Descent is Difficult">
 <meta property="og:url" content="http://crvdgc.me/2018/07/30/learning-long-term/index.html">
 <meta property="og:site_name" content="Down to the Rabbit Hole">
-<meta property="og:description" content="作者Yoshua Bengio, Patrice Simard, and Paolo Frasconi  以下介绍中，块引用代表评论。  摘要指出了 RNN 所面临的问题： temporal contingencies present in the input/output sequences span intervals ，也就是所谓的长依赖问题（long-term dependencies）。">
+<meta property="og:description" content="作者 Yoshua Bengio, Patrice Simard, and Paolo Frasconi  以下介绍中，块引用代表评论。  摘要 指出了 RNN 所面临的问题： temporal contingencies present in the input/output sequences span intervals ，也就是所谓的长依赖问题（long-term dependencies">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://crvdgc.me/2018/07/30/learning-long-term/fig1.png">
 <meta property="og:updated_time" content="2018-07-30T10:43:46.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文解读 Learning Long-Term Dependencies with Gradient Descent is Difficult">
-<meta name="twitter:description" content="作者Yoshua Bengio, Patrice Simard, and Paolo Frasconi  以下介绍中，块引用代表评论。  摘要指出了 RNN 所面临的问题： temporal contingencies present in the input/output sequences span intervals ，也就是所谓的长依赖问题（long-term dependencies）。">
+<meta name="twitter:description" content="作者 Yoshua Bengio, Patrice Simard, and Paolo Frasconi  以下介绍中，块引用代表评论。  摘要 指出了 RNN 所面临的问题： temporal contingencies present in the input/output sequences span intervals ，也就是所谓的长依赖问题（long-term dependencies">
 <meta name="twitter:image" content="http://crvdgc.me/2018/07/30/learning-long-term/fig1.png">
     
 
@@ -170,16 +170,19 @@
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h2 id="作者"><a href="#作者" class="headerlink" title="作者"></a>作者</h2><p>Yoshua Bengio, Patrice Simard, and Paolo Frasconi</p>
+            <h2>作者</h2>
+<p>Yoshua Bengio, Patrice Simard, and Paolo Frasconi</p>
 <blockquote>
 <p>以下介绍中，块引用代表评论。</p>
 </blockquote>
-<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>指出了 RNN 所面临的问题： temporal contingencies present in the input/output sequences span intervals ，也就是所谓的长依赖问题（long-term dependencies）。接下来指出问题的原因是基于梯度的训练方法。这种方法中存在 trade-off bbetween efficient learning by gradient descent and latching on information for long periods 。</p>
+<h2>摘要</h2>
+<p>指出了 RNN 所面临的问题： temporal contingencies present in the input/output sequences span intervals ，也就是所谓的长依赖问题（long-term dependencies）。接下来指出问题的原因是基于梯度的训练方法。这种方法中存在 trade-off bbetween efficient learning by gradient descent and latching on information for long periods 。</p>
 <p>基于此提出的解决方法是使用 alternatives to standard gradient descent ，也就是标准梯度下降外的替代品。</p>
 <blockquote>
 <p>即使作为反向传播算法的提出者， Geoffrey Hinton 在 2017 年也对该算法提出了怀疑。不过近期又发了一篇 Assessing the Scalability of Biologically-Motivated Deep Learning Algorithms and Architectures ，在一些需要特殊网络结构的数据集上比较了生物学启发的多种训练算法，结果发现效果还是 BP 不好。这篇 1994 年的文章讲了 BP 如何不适合解决序列问题中的长依赖。值得一读。</p>
 </blockquote>
-<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>序列任务中需要系统能够存储、更新信息。从过去输入中计算得到的信息，对于输出是很有用的。 RNN 很适合这样的任务，因为其有内部状态（internal state）可以表示这样的上下文信息（context information）。这种特性来自于结构上的“循环”，静态的神经网络，即使引入延迟（Time Delay Neural Networks）也只能将信息储存特定时间长度，而不能储存不定时间长度。</p>
+<h2>引言</h2>
+<p>序列任务中需要系统能够存储、更新信息。从过去输入中计算得到的信息，对于输出是很有用的。 RNN 很适合这样的任务，因为其有内部状态（internal state）可以表示这样的上下文信息（context information）。这种特性来自于结构上的“循环”，静态的神经网络，即使引入延迟（Time Delay Neural Networks）也只能将信息储存特定时间长度，而不能储存不定时间长度。</p>
 <p>RNN 的训练算法基于损失函数的梯度下降。比如 back-propagation through time (BPTT) 算法。 Forward propagation (FP) 算法计算代价更高，但可以在线学习。另一个训练受限 RNN 的算法中，动态神经元（dynamic neurons，只有向自己的一个反馈）和 FP 一样在时间上只需要本地信息，但权重更新所需计算只正比于权值数（和 BP 一样）。但其对于一般序列的存储能力有限，因此限制了其表示能力。</p>
 <p>Long-term dependencies 的定义是在时间 t 的输出依赖于一个更早时间的 $\tau \ll t$ 。尽管 RNN 的表现超过很多统计网络，但更难训练到最优。局部最优的原因是次优解将短期依赖纳入了考虑，但没有考虑长期依赖。 Mozer [19] 发现反向传播很难发现长时间间隔的随机事件。本文从理论和实验上解释这个问题。</p>
 <blockquote>
@@ -197,7 +200,8 @@
 </blockquote>
 <p>文章共 5 节。第 2 节提出一个只有满足上述条件的系统才能解决的最小任务。接下来展示一个 RNN 解法，和一个负实验结果，表明梯度下降连这个简单任务都不适合。第 4 节的理论结果解释了一个系统要么稳定能够抵抗噪音，要么能使用梯度下降法高效训练，但不能同时达到。否则，在时间 t 的状态对于时间 0 的状态的导数将随 t 增大而指数减小。</p>
 <p>因此，反向传播（以及一般的梯度下降算法）对于长序列效率低，因此不满足条件 3 。第 5 节提出了新的算法，并将其与反向传播的变体和模拟退火（simulated annealing）进行比较。使用的是输入输出依赖可以控制的简单任务。</p>
-<h2 id="第-2-节-说明问题的最小任务"><a href="#第-2-节-说明问题的最小任务" class="headerlink" title="第 2 节 说明问题的最小任务"></a>第 2 节 说明问题的最小任务</h2><p>该任务是一个序列二分类问题，最终的类别只取决于前 L 个输入值。</p>
+<h2>第 2 节 说明问题的最小任务</h2>
+<p>该任务是一个序列二分类问题，最终的类别只取决于前 L 个输入值。</p>
 <p>也即类别 $\mathcal{C}(u_1,\dots,u_T) = \mathcal{C}(u_1,\dots,u_L)$ 。而整个输入序列可以具有任意长度 $T \gg L$ 。</p>
 <p>该任务中，长度 L 之后的输入都是不相关的噪声。因此，模型需要有效地储存信息才能解决这个问题。本次实验中， L 之后的输入是均值为 0 的高斯噪声。</p>
 <p>上面提到第 3 个标准是可学习性，这里有两个方面：第一，处理前 L 步的输入并正确分类。第二，将信息储存在状态变量中任意时长。在这个任务中，前面的分类和后面储存的时长无关，因此一个简单的解决方法是使用一个锁存子系统（latching subsystem），接收前面分类子系统的信息作为输入。</p>
@@ -214,7 +218,8 @@
 <p>关于导数相同一段，这是因为假设 h_t 仅取决于 u_t （而非其他时间步的输入），因此 h_t(u_t, \theta) 是一个 context-free 的函数，根据求导的链式法则，对 h_t 的导数相同，而不论它是变量还是另一个变量的函数。</p>
 <p>关于为何选取目标函数值为 0.8 ，因为 tanh 函数值域为 (-1, 1) ，而下一层的输入在 tanh(-1) = -0.76 到 tanh(1) = 0.76 之间。因此多个 tanh 单元叠加值域就在 (-0.8, 0.8) 之间。</p>
 </blockquote>
-<h2 id="第-3-节-一个简单的-RNN-解决方案"><a href="#第-3-节-一个简单的-RNN-解决方案" class="headerlink" title="第 3 节 一个简单的 RNN 解决方案"></a>第 3 节 一个简单的 RNN 解决方案</h2><p>见图 Fig. 1a.</p>
+<h2>第 3 节 一个简单的 RNN 解决方案</h2>
+<p>见图 Fig. 1a.</p>
 <img src="/2018/07/30/learning-long-term/fig1.png" title="Fig. 1">
 <p>这是一个单一神经元的 RNN ，如果 $w \gt 1$ ，有两个吸引子 $\pm \bar{x}$ ，值取决于 $w$ 。</p>
 <p>假设初值 $x_0 = -\bar{x}$ ，文献 [7, 8] 表明存在 $h^\star \gt 0$ 满足：</p>
@@ -240,21 +245,23 @@
 <p>这很符合我们的直觉，噪声越强，对抗噪声的阈值越低，越容易丢失存储。</p>
 </blockquote>
 <p>Fig. 2b 展示了随着 $T$ 的增加，收敛性变差。这表明，梯度下降即使对于长时间存储 1 位信息也很困难。</p>
-<h2 id="第-4-节-使用动力系统学习锁存"><a href="#第-4-节-使用动力系统学习锁存" class="headerlink" title="第 4 节 使用动力系统学习锁存"></a>第 4 节 使用动力系统学习锁存</h2><p>本节以基于动力系统的实时识别器为例子，说明 RNN 能够按双曲吸引子（hyperbolic attractors）的方式鲁棒性地储存信息的条件，会导致梯度消失的问题。</p>
+<h2>第 4 节 使用动力系统学习锁存</h2>
+<p>本节以基于动力系统的实时识别器为例子，说明 RNN 能够按双曲吸引子（hyperbolic attractors）的方式鲁棒性地储存信息的条件，会导致梯度消失的问题。</p>
 <p>非自动（non-autonomous）的离散时间的系统，带有额外的输入：</p>
 <p>$$ a_t = M(a_{t-1}) + u_t $$</p>
 <p>和自动系统（autonomous system）：</p>
 <p>$$ a_t = M(a_{t-1})$$</p>
 <p>其中， $a_t$ 代表系统状态， $u_{t}$ 代表输入。两者是 $n$ 维向量， $M$ 代表非线性映射。</p>
 <p>不带有额外输入的自动系统，可以通过引入额外状态变量和对应输入的方式，转变成非自动的系统。</p>
-<p>比如 $a_t = N(a_{t-1}, u_{t-1})$ （ $a_t$ ， $u_t$ 分别为 $n$ 维和 $m$ 维向量）可以转化为 $a_t^\prime = N^\prime(a_{t-1}^\prime) + u_t^\prime$ ，其中 $a_{t}^\prime = (a_t, y_t)$ 是一个 $n+m$ 维向量， $u_t^\prime = (0, u_t)$ 即前 $n$ 个分量为 0 ，$N^\prime(a_t^\prime) = (N_t(a_{t-1}, y_{t-1}), 0)$ 即后 $m$ 个分量为 0 。</p>
+<p>比如 $a_t = N(a_{t-1}, u_{t-1})$ （ $a_t$ ， $u_t$ 分别为 $n$ 维和 $m$ 维向量）可以转化为 $a_t^\prime = N<sup>\prime(a_{t-1}</sup>\prime) + u_t^\prime$ ，其中 $a_{t}^\prime = (a_t, y_t)$ 是一个 $n+m$ 维向量， $u_t^\prime = (0, u_t)$ 即前 $n$ 个分量为 0 ，$N<sup>\prime(a_t</sup>\prime) = (N_t(a_{t-1}, y_{t-1}), 0)$ 即后 $m$ 个分量为 0 。</p>
 <p>最终，$y_t = u_t$ 。</p>
 <blockquote>
 <p>以上转换相当于将本来的内部状态变量当做系统的额外输入。使用映射计算出下面的 n 维状态后，就将剩下的 m 维分量丢弃。再从外界输入同样的 m 维分量，组合在一起恢复内部状态，作为下一次映射的输入。</p>
 </blockquote>
 <p>注意到具有 $N^\prime$ 形式的非自动系统也可以等价转换为自动系统。因此，不失一般性，我们只考虑非自动系统。</p>
 <p>下面说明，当使用双曲吸引子进行锁存时，只有两种情况会发生：要么对噪声十分敏感，要么代价函数在 t 时刻对于 0 时刻的导数，将随 t 增加而指数下降。</p>
-<h3 id="4-1-分析"><a href="#4-1-分析" class="headerlink" title="4.1 分析"></a>4.1 分析</h3><p>为了锁存一位信息，希望将系统的活动 $a_t$ 限制在定义域的一个子集 $S$ 上。这样能区分两个状态：在 $S$ 内，和不在 $S$ 内。为了使 $a_t$ 保持在其中，动力系统可以将其放在一个吸引子的吸引盆（basin of attraction）中。（吸引子也可以是子流形或子空间的吸引子）。想要“擦除”这一位信息，系统将 $a_t$ 从吸引盆中推出，可能放进另一个吸引盆中。本节说明，如果吸引盆是双曲的（hyperbolic），或者可以转化为双曲的（比如周期稳定吸引子 periodic stable attractor），那么对 $t_0$ 输入的导数会迅速消失。</p>
+<h3>4.1 分析</h3>
+<p>为了锁存一位信息，希望将系统的活动 $a_t$ 限制在定义域的一个子集 $S$ 上。这样能区分两个状态：在 $S$ 内，和不在 $S$ 内。为了使 $a_t$ 保持在其中，动力系统可以将其放在一个吸引子的吸引盆（basin of attraction）中。（吸引子也可以是子流形或子空间的吸引子）。想要“擦除”这一位信息，系统将 $a_t$ 从吸引盆中推出，可能放进另一个吸引盆中。本节说明，如果吸引盆是双曲的（hyperbolic），或者可以转化为双曲的（比如周期稳定吸引子 periodic stable attractor），那么对 $t_0$ 输入的导数会迅速消失。</p>
 <p>定义 1 ： $E$ 是映射 $M$ 的不动点，如果 $E = M(E)$</p>
 <p>定义 2 ： 不动点点集 $X$ 是可微映射 $M$ 的双曲吸引子，如果 $\forall a \in X, \  M^\prime(a)$ 的特征值的绝对值小于 1 。</p>
 <p>吸引子可能包含一个点（固定点吸引子， fixed point attractor），有限个点（周期性吸引子， periodic attractor）或者无限个点（混沌吸引子， chaotic attractor）。</p>
@@ -264,7 +271,7 @@
 <p>以上关于吸引子的知识全没有接触过。翻译了一下。仅从直观上进行理解。</p>
 </blockquote>
 <p>定义 3 ： 一个吸引子 $X$ 的吸引盆 $\beta(X)$ ，指映射 $M$ 下收敛于 $X$ 的点集。即 $\beta(x) = { a\ :\  \forall \epsilon, \exists l, \exists x \in X \text{ s.t. } ||M^l(a)|| \lt \epsilon}$</p>
-<p>定义 4 ： $\Gamma(X)$ 是双曲吸引子 $X$ 吸引盆中的 reduced attracting set，如果满足 $\forall l \ge 1$ ， $(M^l)^\prime(y)$ 的所有特征值小于 1。</p>
+<p>定义 4 ： $\Gamma(X)$ 是双曲吸引子 $X$ 吸引盆中的 reduced attracting set，如果满足 $\forall l \ge 1$ ， $(M<sup>l)</sup>\prime(y)$ 的所有特征值小于 1。</p>
 <p>根据定义有， $X \subset \Gamma(X) \subset \beta(X)$ 。</p>
 <blockquote>
 <p>reduced 应该翻译成“剩余”还是“减小”？不太确定。这里只要求特征值小于 1 ，双曲吸引子要求特征绝对值小于 1 ，故双曲吸引子是 Gamma(X) 的子集。直觉上，特征值小于 1 可能对应上面“将其保持在吸引盆”中的要求。</p>
@@ -277,13 +284,16 @@
 <img src="/2018/07/30/learning-long-term/fig3.png" title="Fig. 3">
 <p>定理 4 ： 当输入 $u_t$ 使得系统在时间 0 后保持在 $X$ 上鲁棒时，随着 $t$ 趋近于无穷，$a_t$ 对 $a_0$ 的偏导趋近于 0 。</p>
 <p>也就是说对抗噪声的代价是对过去事件的导数与近期事件相比会小很多。</p>
-<h3 id="4-2-对权重梯度的影响"><a href="#4-2-对权重梯度的影响" class="headerlink" title="4.2 对权重梯度的影响"></a>4.2 对权重梯度的影响</h3><p>$$\frac{\partial C_t}{\partial W} = \sum_{\tau \le t} \frac{\partial C_t}{\partial a_\tau}\frac{\partial a_\tau}{\partial W} = \sum_{\tau \le t} \frac{\partial C_t}{\partial a_t}\frac{\partial a_t}{\partial a_\tau} \frac{\partial a_\tau}{\partial W}$$</p>
+<h3>4.2 对权重梯度的影响</h3>
+<p>$$\frac{\partial C_t}{\partial W} = \sum_{\tau \le t} \frac{\partial C_t}{\partial a_\tau}\frac{\partial a_\tau}{\partial W} = \sum_{\tau \le t} \frac{\partial C_t}{\partial a_t}\frac{\partial a_t}{\partial a_\tau} \frac{\partial a_\tau}{\partial W}$$</p>
 <p>因此，相对于较近的事件，$\tau \ll t$ 的前两项的乘积较小，因此对最终的结果影响较小。也就是，即使可能存在一个 $W$ 使得 $a_\tau$ 进入一个更好的吸引盆，但对 $W$ 的梯度不会反映这种可能性。</p>
 <p>举例来说，假设 A ， B 两个系统顺次相接完成一项任务。且要求 B 使用 A 在 0 时刻检测到事件的信息，在遥远的 T 时刻使用该信息计算错误。（第 2 节定义的任务符合这个特征）。如果 B 训练不足，不能将 A 的结果锁存，那么 T 时刻的错误对 A 在 0 时刻产生的结果影响非常小。相反，如果 B 能够将信息储存很长时间，正确的梯度会被传播回去，但却迅速消失成为小值。因此， A 很难训练。</p>
-<h2 id="第-5-节-替代的方法"><a href="#第-5-节-替代的方法" class="headerlink" title="第 5 节 替代的方法"></a>第 5 节 替代的方法</h2><blockquote>
+<h2>第 5 节 替代的方法</h2>
+<blockquote>
 <p>本节中给出了模拟退火等算法作为梯度下降的替代算法并在多个任务上测试了结果。每个任务上都有算法比反向传播更佳。</p>
 </blockquote>
-<h2 id="第-6-节-结论"><a href="#第-6-节-结论" class="headerlink" title="第 6 节 结论"></a>第 6 节 结论</h2><p>一个未进行讨论的点是类似的问题是否会在混沌吸引子中出现。</p>
+<h2>第 6 节 结论</h2>
+<p>一个未进行讨论的点是类似的问题是否会在混沌吸引子中出现。</p>
 <p>这个问题可能也会在深度前馈神经网络（feedforward network）中出现，因为 RNN 按时间展开就是一个共享权值的前馈神经网络。</p>
 <p>本文研究并不意味着不能为特定任务训练神经网络，相反，如果有先验知识可以设置神经网络的权值共享和初值，利用起来会提升效果。比如在 latch problem 和 parity problem 中，先使用短序列进行训练可以让系统迅速进入正确的区域。</p>
 
@@ -293,7 +303,7 @@
 
 
 
-    <a data-url="http://crvdgc.me/2018/07/30/learning-long-term/" data-id="cjkaqljzf000yqtsxvvexsfay" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://crvdgc.me/2018/07/30/learning-long-term/" data-id="cjkeao1ly0017dasxe8f2xaob" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -436,6 +446,26 @@
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2018/08/04/kuhn-cache/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2018/08/04/kuhn-cache/table3.png)" alt="Cache Method in n-gram" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/计算机/人工智能/">人工智能</a></p>
+                            <p class="item-title"><a href="/2018/08/04/kuhn-cache/" class="title">Cache Method in n-gram</a></p>
+                            <p class="item-date"><time datetime="2018-08-03T17:55:36.000Z" itemprop="datePublished">2018-08-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2018/07/31/rnnlm/" class="thumbnail">
     
     
@@ -522,7 +552,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/科幻/">科幻</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/科幻/评论/">评论</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机/">计算机</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/计算机/人工智能/">人工智能</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机/杂谈/">杂谈</a><span class="category-list-count">1</span></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/科幻/">科幻</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/科幻/评论/">评论</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机/">计算机</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/计算机/人工智能/">人工智能</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机/杂谈/">杂谈</a><span class="category-list-count">1</span></li></ul></li></ul>
         </div>
     </div>
 
@@ -532,7 +562,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">4</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -542,7 +572,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RNN/">RNN</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cyberpunk/">cyberpunk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pkd/">pkd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/兴趣/">兴趣</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剧集/">剧集</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚拟现实/">虚拟现实</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/长依赖/">长依赖</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RNN/">RNN</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cyberpunk/">cyberpunk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/language-model/">language-model</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pkd/">pkd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/兴趣/">兴趣</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剧集/">剧集</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚拟现实/">虚拟现实</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/长依赖/">长依赖</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -552,7 +582,7 @@
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/NLP/" style="font-size: 10px;">NLP</a> <a href="/tags/RNN/" style="font-size: 20px;">RNN</a> <a href="/tags/cyberpunk/" style="font-size: 10px;">cyberpunk</a> <a href="/tags/pkd/" style="font-size: 10px;">pkd</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/兴趣/" style="font-size: 10px;">兴趣</a> <a href="/tags/剧集/" style="font-size: 10px;">剧集</a> <a href="/tags/游戏/" style="font-size: 10px;">游戏</a> <a href="/tags/虚拟现实/" style="font-size: 10px;">虚拟现实</a> <a href="/tags/长依赖/" style="font-size: 10px;">长依赖</a>
+            <a href="/tags/NLP/" style="font-size: 10px;">NLP</a> <a href="/tags/RNN/" style="font-size: 20px;">RNN</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/cyberpunk/" style="font-size: 10px;">cyberpunk</a> <a href="/tags/language-model/" style="font-size: 10px;">language-model</a> <a href="/tags/pkd/" style="font-size: 10px;">pkd</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/兴趣/" style="font-size: 10px;">兴趣</a> <a href="/tags/剧集/" style="font-size: 10px;">剧集</a> <a href="/tags/游戏/" style="font-size: 10px;">游戏</a> <a href="/tags/虚拟现实/" style="font-size: 10px;">虚拟现实</a> <a href="/tags/长依赖/" style="font-size: 10px;">长依赖</a>
         </div>
     </div>
 

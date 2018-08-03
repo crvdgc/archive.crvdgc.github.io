@@ -6,17 +6,26 @@
     
 
     
-    <title>标签：: 兴趣 | Down to the Rabbit Hole</title>
+    <title>Cache Method in n-gram | Down to the Rabbit Hole</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Down to the Rabbit Hole">
-<meta property="og:url" content="http://crvdgc.me/tags/兴趣/index.html">
+        <meta name="keywords" content="cache,language-model" />
+    
+    <meta name="description" content="前言 本篇简略介绍一下 (Kuhn, 1988)[1] 和 (Kuhn, De Mori, 1990)[2] 中的主要思想，即在 n-gram 基础的马尔科夫模型中引入 cache 机制的方法。作为讨论后续使用神经网络方法引入连续 cache 的序列模型的铺垫。 思想 为序列模型引入 cache 是基于这样的假设：近期使用的单词，出现频率比全局更高。这是一个受语言学启发的假设。 原语言模型基于 n">
+<meta name="keywords" content="cache,language-model">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cache Method in n-gram">
+<meta property="og:url" content="http://crvdgc.me/2018/08/04/kuhn-cache/index.html">
 <meta property="og:site_name" content="Down to the Rabbit Hole">
+<meta property="og:description" content="前言 本篇简略介绍一下 (Kuhn, 1988)[1] 和 (Kuhn, De Mori, 1990)[2] 中的主要思想，即在 n-gram 基础的马尔科夫模型中引入 cache 机制的方法。作为讨论后续使用神经网络方法引入连续 cache 的序列模型的铺垫。 思想 为序列模型引入 cache 是基于这样的假设：近期使用的单词，出现频率比全局更高。这是一个受语言学启发的假设。 原语言模型基于 n">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://crvdgc.me/2018/08/04/kuhn-cache/table3.png">
+<meta property="og:updated_time" content="2018-08-03T17:58:02.343Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Down to the Rabbit Hole">
+<meta name="twitter:title" content="Cache Method in n-gram">
+<meta name="twitter:description" content="前言 本篇简略介绍一下 (Kuhn, 1988)[1] 和 (Kuhn, De Mori, 1990)[2] 中的主要思想，即在 n-gram 基础的马尔科夫模型中引入 cache 机制的方法。作为讨论后续使用神经网络方法引入连续 cache 的序列模型的铺垫。 思想 为序列模型引入 cache 是基于这样的假设：近期使用的单词，出现频率比全局更高。这是一个受语言学启发的假设。 原语言模型基于 n">
+<meta name="twitter:image" content="http://crvdgc.me/2018/08/04/kuhn-cache/table3.png">
     
 
     
@@ -125,78 +134,148 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-tag"></i>标签：: <em>兴趣</em>
+    <a class="page-title-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/计算机/人工智能/">人工智能</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-kuhn-cache" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2018" class="archive-year"><i class="icon fa fa-calendar-o"></i>2018</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/07/29/memento-solver/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/2018/07/29/memento-solver/puzzle.png)" alt="编程解决《去月球》 To the Moon 记忆碎片小游戏" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span><a href="http://crvdgc.me/2018/07/29/memento-solver/#isso-thread"></a></span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/计算机/杂谈/">杂谈</a>
-            </div>
-            <div class="date"><time datetime="2018-07-28T17:24:21.000Z" itemprop="datePublished">2018-07-29</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/07/29/memento-solver/">编程解决《去月球》 To the Moon 记忆碎片小游戏</a>
+        Cache Method in n-gram
         </h1>
     
 
-        <p class="article-excerpt">
-            引言
-记忆碎片（Memento）是游戏《去月球》（To the Moon）中的一个解谜小游戏。基本规则已在游戏中介绍。即通过点击按钮翻转某一行、列或者对角线，直至所有碎片都转成同一面。
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/08/04/kuhn-cache/" class="article-date">
+            <time datetime="2018-08-03T17:55:36.000Z" itemprop="datePublished">2018-08-04</time>
+        </a>
+    </div>
 
-这个解谜与成就/剧情分支无关，而且谜题设置比较简单，比较适合自己玩。谜题也非随机生成，答案都可以在网上找到。
-兴趣使然地写了一个编程通用解法。在此介绍一下。
-分析
-注意到同一位置进行任意偶数次变换都等价于不变，而
-        </p>
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/cache/">cache</a>, <a class="tag-link" href="/tags/language-model/">language-model</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2>前言</h2>
+<p>本篇简略介绍一下 (Kuhn, 1988)<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> 和 (Kuhn, De Mori, 1990)<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> 中的主要思想，即在 n-gram 基础的马尔科夫模型中引入 cache 机制的方法。作为讨论后续使用神经网络方法引入连续 cache 的序列模型的铺垫。</p>
+<h2>思想</h2>
+<p>为序列模型引入 cache 是基于这样的假设：近期使用的单词，出现频率比全局更高。这是一个受语言学启发的假设。</p>
+<p>原语言模型基于 n-gram ，论文中提出的模型为其增加了 cache 部分。以 Part-of-Speech (POS) 作为线索，改进语言模型。这是基于另一个假设：一个内容词（a content word），比如特定的名词或动词，倾向于集中出现；而功能词（function words），倾向于平均分布。</p>
+<p>模型的核心可以用以下公式概括：</p>
+<p>$$ P(W_i = W | g_i = g_j) \approx k_{M, j} \times f(W_i = W | g_i = g_j) +
+k_{C, j} \times C_j(W, i) $$</p>
+<p>各项含义如下：</p>
+<ul>
+<li>$W_i = W$ 即第 $i$ 个位置上的单词是 $W$</li>
+<li>$g_i = g_j$ 即第 $i$ 个位置上的 POS 是 $g_j$</li>
+<li>$k_{M, j} + k_{C, j} = 1$ ，两项分别代表全局 Markov 模型部分概率权重和 cache 部分概率权重。注意到不同的 POS 对应不同的权重分配。</li>
+<li>$f(W_i = W | g_i = g_j)$ 为全局 Markov 模型，这里使用的是 3g-gram 。</li>
+<li>$C_j(W, i)$ 为从第 $j$ 个 POS 对应的 cache 中所得到第 $i$ 个位置单词为 $W$ 的概率，代表了语境信息。</li>
+</ul>
+<p>进行序列预测时，每个 POS 维护一个 LRU 的 cache 储存一定量的单词。对于第 $i$ 个位置，预测其为单词 $W$ 的概率由前两个位置的 POS 产生各种 POS 的概率，乘以由上面公式计算出不同 POS 生成该单词的概率得到。</p>
+<p>以上部分，略去了 trigram 预测 POS 的模型以及对 out-of-vocabulary 单词的处理。具体可见论文。</p>
+<h2>结果</h2>
+<img src="/2018/08/04/kuhn-cache/table3.png" title="Table 3">
+<p>实验证明了 cache 的有效性，并为内容词与功能词的语言学假设提供了实验支持。实验发现<sup class="footnote-ref"><a href="#fn2" id="fnref2:1">[2]</a></sup>，功能词全局部分比重较大，而内容词 cache 部分与全局部分比重相当。见上方表格 3 。</p>
+<h2>评论</h2>
+<p>对语境信息建模的方式很多，直接用 cache 储存起来算是很直接的想法。这篇论文[^3]将 Kuhn 两篇中的思想改成了连续版本，依然保留了无需训练的优点。也许有的时候模型偏置（model bias）不需要对处理的过程太过干预，能为其提供获得想要信息的方法就好。</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Kuhn, R. (1988). Speech recognition and the frequency of recently used words: A modified markov model for natural language. Proceedings of the 12th conference on Computational linguistics-Volume 1, Association for Computational Linguistics. <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>Kuhn, R. and R. De Mori (1990). “A cache-based natural language model for speech recognition.” IEEE transactions on pattern analysis and machine intelligence 12(6): 570-583. <a href="#fnref2" class="footnote-backref">↩</a> <a href="#fnref2:1" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://crvdgc.me/2018/08/04/kuhn-cache/" data-id="cjkeao1jo0002dasxgd6agyz1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
     </div>
 </article>
-    
-        </div>
-    
 
-
-    </div></section>
+    <section id="comments">
+    
+    </section>
 
 
 
@@ -234,6 +313,19 @@
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/07/31/rnnlm/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">论文解读 Recurrent neural network based language model</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         

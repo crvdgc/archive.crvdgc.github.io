@@ -6,13 +6,13 @@
     
 
     
-    <title>标签：: 兴趣 | Down to the Rabbit Hole</title>
+    <title>标签：: language-model | Down to the Rabbit Hole</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta property="og:type" content="website">
 <meta property="og:title" content="Down to the Rabbit Hole">
-<meta property="og:url" content="http://crvdgc.me/tags/兴趣/index.html">
+<meta property="og:url" content="http://crvdgc.me/tags/language-model/index.html">
 <meta property="og:site_name" content="Down to the Rabbit Hole">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
@@ -125,7 +125,7 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-tag"></i>标签：: <em>兴趣</em>
+    <i class="icon fa fa-tag"></i>标签：: <em>language-model</em>
     </h1>
 </div>
                         <div class="main-body-content">
@@ -148,17 +148,17 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2018/07/29/memento-solver/" class="thumbnail">
+        <a href="/2018/08/04/kuhn-cache/" class="thumbnail">
     
     
-        <span style="background-image:url(/2018/07/29/memento-solver/puzzle.png)" alt="编程解决《去月球》 To the Moon 记忆碎片小游戏" class="thumbnail-image"></span>
+        <span style="background-image:url(/2018/08/04/kuhn-cache/table3.png)" alt="Cache Method in n-gram" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span><a href="http://crvdgc.me/2018/07/29/memento-solver/#isso-thread"></a></span>
+        <span><a href="http://crvdgc.me/2018/08/04/kuhn-cache/#isso-thread"></a></span>
     
 </span>
 
@@ -169,25 +169,23 @@
         
         <div class="article-meta">
             <div class="category">
-            <a class="article-category-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/计算机/杂谈/">杂谈</a>
+            <a class="article-category-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/计算机/人工智能/">人工智能</a>
             </div>
-            <div class="date"><time datetime="2018-07-28T17:24:21.000Z" itemprop="datePublished">2018-07-29</time></div>
+            <div class="date"><time datetime="2018-08-03T17:55:36.000Z" itemprop="datePublished">2018-08-04</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/07/29/memento-solver/">编程解决《去月球》 To the Moon 记忆碎片小游戏</a>
+        <a href="/2018/08/04/kuhn-cache/">Cache Method in n-gram</a>
         </h1>
     
 
         <p class="article-excerpt">
-            引言
-记忆碎片（Memento）是游戏《去月球》（To the Moon）中的一个解谜小游戏。基本规则已在游戏中介绍。即通过点击按钮翻转某一行、列或者对角线，直至所有碎片都转成同一面。
-
-这个解谜与成就/剧情分支无关，而且谜题设置比较简单，比较适合自己玩。谜题也非随机生成，答案都可以在网上找到。
-兴趣使然地写了一个编程通用解法。在此介绍一下。
-分析
-注意到同一位置进行任意偶数次变换都等价于不变，而
+            前言
+本篇简略介绍一下 (Kuhn, 1988)[1] 和 (Kuhn, De Mori, 1990)[2] 中的主要思想，即在 n-gram 基础的马尔科夫模型中引入 cache 机制的方法。作为讨论后续使用神经网络方法引入连续 cache 的序列模型的铺垫。
+思想
+为序列模型引入 cache 是基于这样的假设：近期使用的单词，出现频率比全局更高。这是一个受语言学启发的假设。
+原语言模型基于 n
         </p>
     </div>
 </article>
