@@ -21,7 +21,7 @@
 <meta property="og:description" content="前言 本篇简略介绍一下 (Kuhn, 1988)[1] 和 (Kuhn, De Mori, 1990)[2] 中的主要思想，即在 n-gram 基础的马尔科夫模型中引入 cache 机制的方法。作为讨论后续使用神经网络方法引入连续 cache 的序列模型的铺垫。 思想 为序列模型引入 cache 是基于这样的假设：近期使用的单词，出现频率比全局更高。这是一个受语言学启发的假设。 原语言模型基于 n">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://crvdgc.me/2018/08/04/kuhn-cache/table3.png">
-<meta property="og:updated_time" content="2018-08-03T17:58:02.343Z">
+<meta property="og:updated_time" content="2018-08-03T18:02:05.855Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cache Method in n-gram">
 <meta name="twitter:description" content="前言 本篇简略介绍一下 (Kuhn, 1988)[1] 和 (Kuhn, De Mori, 1990)[2] 中的主要思想，即在 n-gram 基础的马尔科夫模型中引入 cache 机制的方法。作为讨论后续使用神经网络方法引入连续 cache 的序列模型的铺垫。 思想 为序列模型引入 cache 是基于这样的假设：近期使用的单词，出现频率比全局更高。这是一个受语言学启发的假设。 原语言模型基于 n">
@@ -192,13 +192,15 @@ k_{C, j} \times C_j(W, i) $$</p>
 <img src="/2018/08/04/kuhn-cache/table3.png" title="Table 3">
 <p>实验证明了 cache 的有效性，并为内容词与功能词的语言学假设提供了实验支持。实验发现<sup class="footnote-ref"><a href="#fn2" id="fnref2:1">[2]</a></sup>，功能词全局部分比重较大，而内容词 cache 部分与全局部分比重相当。见上方表格 3 。</p>
 <h2>评论</h2>
-<p>对语境信息建模的方式很多，直接用 cache 储存起来算是很直接的想法。这篇论文[^3]将 Kuhn 两篇中的思想改成了连续版本，依然保留了无需训练的优点。也许有的时候模型偏置（model bias）不需要对处理的过程太过干预，能为其提供获得想要信息的方法就好。</p>
+<p>对语境信息建模的方式很多，直接用 cache 储存起来算是很直接的想法。这篇论文<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>将 Kuhn 两篇中的思想改成了连续版本，依然保留了无需训练的优点。也许有的时候模型偏置（model bias）不需要对处理的过程太过干预，能为其提供获得想要信息的方法就好。</p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
 <li id="fn1" class="footnote-item"><p>Kuhn, R. (1988). Speech recognition and the frequency of recently used words: A modified markov model for natural language. Proceedings of the 12th conference on Computational linguistics-Volume 1, Association for Computational Linguistics. <a href="#fnref1" class="footnote-backref">↩</a></p>
 </li>
 <li id="fn2" class="footnote-item"><p>Kuhn, R. and R. De Mori (1990). “A cache-based natural language model for speech recognition.” IEEE transactions on pattern analysis and machine intelligence 12(6): 570-583. <a href="#fnref2" class="footnote-backref">↩</a> <a href="#fnref2:1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>Grave, E., et al. (2016). “Improving neural language models with a continuous cache.” arXiv preprint arXiv:1612.04426. <a href="#fnref3" class="footnote-backref">↩</a></p>
 </li>
 </ol>
 </section>
