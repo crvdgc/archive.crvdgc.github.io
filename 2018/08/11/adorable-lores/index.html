@@ -6,26 +6,26 @@
     
 
     
-    <title>Cache Method in n-gram | Down to the Rabbit Hole</title>
+    <title>Adorable lores | Down to the Rabbit Hole</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="cache,language-model" />
+        <meta name="keywords" content="游戏,创作,设定" />
     
-    <meta name="description" content="前言 本篇简略介绍一下 (Kuhn, 1988)[1] 和 (Kuhn, De Mori, 1990)[2] 中的主要思想，即在 n-gram 基础的马尔科夫模型中引入 cache 机制的方法。作为讨论后续使用神经网络方法引入连续 cache 的序列模型的铺垫。 思想 为序列模型引入 cache 是基于这样的假设：近期使用的单词，出现频率比全局更高。这是一个受语言学启发的假设。 原语言模型基于 n">
-<meta name="keywords" content="cache,language-model">
+    <meta name="description" content="前言 lore 这个词在日常中不大常见[1]。见得更多的，可能是它的亲戚 folklore （民俗）。不过在科幻奇幻世界（universe）构建，以及游戏背景中经常可以看到这个词。它到底是什么意思呢？和一般的 story 有什么区别？二者哪个更好？我们能从已有的例子中学到什么构建世界以及叙述上的技巧呢？ 本篇博文将通过几个例子，尝试回答以上问题。可能是因为在学 GRE 吧，结构写得像中学作文，不">
+<meta name="keywords" content="游戏,创作,设定">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Cache Method in n-gram">
-<meta property="og:url" content="http://crvdgc.me/2018/08/04/kuhn-cache/index.html">
+<meta property="og:title" content="Adorable lores">
+<meta property="og:url" content="http://crvdgc.me/2018/08/11/adorable-lores/index.html">
 <meta property="og:site_name" content="Down to the Rabbit Hole">
-<meta property="og:description" content="前言 本篇简略介绍一下 (Kuhn, 1988)[1] 和 (Kuhn, De Mori, 1990)[2] 中的主要思想，即在 n-gram 基础的马尔科夫模型中引入 cache 机制的方法。作为讨论后续使用神经网络方法引入连续 cache 的序列模型的铺垫。 思想 为序列模型引入 cache 是基于这样的假设：近期使用的单词，出现频率比全局更高。这是一个受语言学启发的假设。 原语言模型基于 n">
+<meta property="og:description" content="前言 lore 这个词在日常中不大常见[1]。见得更多的，可能是它的亲戚 folklore （民俗）。不过在科幻奇幻世界（universe）构建，以及游戏背景中经常可以看到这个词。它到底是什么意思呢？和一般的 story 有什么区别？二者哪个更好？我们能从已有的例子中学到什么构建世界以及叙述上的技巧呢？ 本篇博文将通过几个例子，尝试回答以上问题。可能是因为在学 GRE 吧，结构写得像中学作文，不">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://crvdgc.me/2018/08/04/kuhn-cache/table3.png">
-<meta property="og:updated_time" content="2018-08-03T18:02:05.855Z">
+<meta property="og:image" content="http://crvdgc.me/2018/08/11/adorable-lores/Medieval_writing_desk.jpg">
+<meta property="og:updated_time" content="2018-08-11T13:26:53.492Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Cache Method in n-gram">
-<meta name="twitter:description" content="前言 本篇简略介绍一下 (Kuhn, 1988)[1] 和 (Kuhn, De Mori, 1990)[2] 中的主要思想，即在 n-gram 基础的马尔科夫模型中引入 cache 机制的方法。作为讨论后续使用神经网络方法引入连续 cache 的序列模型的铺垫。 思想 为序列模型引入 cache 是基于这样的假设：近期使用的单词，出现频率比全局更高。这是一个受语言学启发的假设。 原语言模型基于 n">
-<meta name="twitter:image" content="http://crvdgc.me/2018/08/04/kuhn-cache/table3.png">
+<meta name="twitter:title" content="Adorable lores">
+<meta name="twitter:description" content="前言 lore 这个词在日常中不大常见[1]。见得更多的，可能是它的亲戚 folklore （民俗）。不过在科幻奇幻世界（universe）构建，以及游戏背景中经常可以看到这个词。它到底是什么意思呢？和一般的 story 有什么区别？二者哪个更好？我们能从已有的例子中学到什么构建世界以及叙述上的技巧呢？ 本篇博文将通过几个例子，尝试回答以上问题。可能是因为在学 GRE 吧，结构写得像中学作文，不">
+<meta name="twitter:image" content="http://crvdgc.me/2018/08/11/adorable-lores/Medieval_writing_desk.jpg">
     
 
     
@@ -134,18 +134,18 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/计算机/人工智能/">人工智能</a>
+    <a class="page-title-link" href="/categories/科幻/">科幻</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/科幻/评论/">评论</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-kuhn-cache" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-adorable-lores" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Cache Method in n-gram
+        Adorable lores
         </h1>
     
 
@@ -155,52 +155,73 @@
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2018/08/04/kuhn-cache/" class="article-date">
-            <time datetime="2018-08-03T17:55:36.000Z" itemprop="datePublished">2018-08-04</time>
+        <a href="/2018/08/11/adorable-lores/" class="article-date">
+            <time datetime="2018-08-11T13:09:09.000Z" itemprop="datePublished">2018-08-11</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/cache/">cache</a>, <a class="tag-link" href="/tags/language-model/">language-model</a>
+        <a class="tag-link" href="/tags/创作/">创作</a>, <a class="tag-link" href="/tags/游戏/">游戏</a>, <a class="tag-link" href="/tags/设定/">设定</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h2>前言</h2>
-<p>本篇简略介绍一下 (Kuhn, 1988)<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> 和 (Kuhn, De Mori, 1990)<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> 中的主要思想，即在 n-gram 基础的马尔科夫模型中引入 cache 机制的方法。作为讨论后续使用神经网络方法引入连续 cache 的序列模型的铺垫。</p>
-<h2>思想</h2>
-<p>为序列模型引入 cache 是基于这样的假设：近期使用的单词，出现频率比全局更高。这是一个受语言学启发的假设。</p>
-<p>原语言模型基于 n-gram ，论文中提出的模型为其增加了 cache 部分。以 Part-of-Speech (POS) 作为线索，改进语言模型。这是基于另一个假设：一个内容词（a content word），比如特定的名词或动词，倾向于集中出现；而功能词（function words），倾向于平均分布。</p>
-<p>模型的核心可以用以下公式概括：</p>
-<p>$$ P(W_i = W | g_i = g_j) \approx k_{M, j} \times f(W_i = W | g_i = g_j) +
-k_{C, j} \times C_j(W, i) $$</p>
-<p>各项含义如下：</p>
-<ul>
-<li>$W_i = W$ 即第 $i$ 个位置上的单词是 $W$</li>
-<li>$g_i = g_j$ 即第 $i$ 个位置上的 POS 是 $g_j$</li>
-<li>$k_{M, j} + k_{C, j} = 1$ ，两项分别代表全局 Markov 模型部分概率权重和 cache 部分概率权重。注意到不同的 POS 对应不同的权重分配。</li>
-<li>$f(W_i = W | g_i = g_j)$ 为全局 Markov 模型，这里使用的是 3g-gram 。</li>
-<li>$C_j(W, i)$ 为从第 $j$ 个 POS 对应的 cache 中所得到第 $i$ 个位置单词为 $W$ 的概率，代表了语境信息。</li>
-</ul>
-<p>进行序列预测时，每个 POS 维护一个 LRU 的 cache 储存一定量的单词。对于第 $i$ 个位置，预测其为单词 $W$ 的概率由前两个位置的 POS 产生各种 POS 的概率，乘以由上面公式计算出不同 POS 生成该单词的概率得到。</p>
-<p>以上部分，略去了 trigram 预测 POS 的模型以及对 out-of-vocabulary 单词的处理。具体可见论文。</p>
-<h2>结果</h2>
-<img src="/2018/08/04/kuhn-cache/table3.png" title="Table 3">
-<p>实验证明了 cache 的有效性，并为内容词与功能词的语言学假设提供了实验支持。实验发现<sup class="footnote-ref"><a href="#fn2" id="fnref2:1">[2]</a></sup>，功能词全局部分比重较大，而内容词 cache 部分与全局部分比重相当。见上方表格 3 。</p>
-<h2>评论</h2>
-<p>对语境信息建模的方式很多，直接用 cache 储存起来算是很直接的想法。这篇论文<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>将 Kuhn 两篇中的思想改成了连续版本，依然保留了无需训练的优点。也许有的时候模型偏置（model bias）不需要对处理的过程太过干预，能为其提供获得想要信息的方法就好。</p>
+            <img src="/2018/08/11/adorable-lores/Medieval_writing_desk.jpg" title="Lores">
+<h2>前言</h2>
+<p>lore 这个词在日常中不大常见<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。见得更多的，可能是它的亲戚 folklore （民俗）。不过在科幻奇幻世界（universe）构建，以及游戏背景中经常可以看到这个词。它到底是什么意思呢？和一般的 story 有什么区别？二者哪个更好？我们能从已有的例子中学到什么构建世界以及叙述上的技巧呢？</p>
+<p>本篇博文将通过几个例子，尝试回答以上问题。可能是因为在学 GRE 吧，结构写得像中学作文，不过我发现这是最有效的交流方式。</p>
+<p><strong>注意</strong>，前方将有 <strong><em>黑暗之魂 1 和 3</em></strong> 、 <strong><em>银河帝国系列</em></strong> 的主要剧透（达到影响首次体验程度）。此外，还有 <strong><em>冰与火之歌系列</em></strong>、<strong><em>VA-11 Hall-A: Cyberpunk Bartender Action</em></strong>、 <strong><em>差分机</em></strong> 、 <strong><em>高城堡里的人</em></strong> 的轻微剧透（不多于书的腰封、游戏简介的程度）。</p>
+<p><strong>我已经警告过你了</strong></p>
+<h2>The Core of the Lore</h2>
+<blockquote>
+<p>世界不是从一片混沌中忽然出现的。无论事物现在呈现什么状态，它们一定不是亘古不变的，发展成为现在的样子一定有其原因。
+——奥森·斯科特·卡德<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></p>
+</blockquote>
+<p>从词源上看，lore 本意包含 teaching 。词义是关于某一主题的传统或知识，通过教育或经验，随着时间的累积获得。在幻想世界中，与 backstory 接近，时间上位于现在发生的故事之前。形式上可以是故事，比如某个人物的起源故事（origin story）；或者是某一类人对其他人和物的态度，比如神话等。</p>
+<p>从这个角度来看，lore 为当前故事提供了一个语境。单纯的 exposition 只描述了世界现在的状态，而 lore 解释了来源。可以说是在构建世界的硬件背景（地理环境、科幻/奇幻设定）之上的软件背景。不过 lore 本身并不是设定。相比之下，更关注生活在世界中的人们。Lore 体现了人们对世界的认知。Lore 可以说是一种集体无意识产物，神话（myth）是 folklore 中比较重要的一种，不过一般的 lore 不一定要包含“神”，也可以是传奇（legend）。</p>
+<p>我们通过 lore 来一窥世界中人们的精神状态。我们关心世界，不过更关心 lore 中的人，以及讲述、学习 lore 的人。我们知道他们对世界的认识，从而了解他们的性格，他们如何行动，他们做出选择的原因，以及每个选项上承受的重量。</p>
+<p>不了解 lore ，我们同样可以读故事（story）。毕竟，故事只是时间上连续发生的事件而已。不过 lore 为我们提供了深入理解其情节（plot）的机会。神话是社会向其组成个体解释自身的故事。通过了解神话与 lore ，我们得以聆听这种教诲，甚至成为这一虚拟社会中的一员。</p>
+<p>由此， lore 可以大大增强故事的沉浸感。不只是 <strong>知道</strong> ，而是 <strong>懂得</strong> ，甚至于 <strong>进入</strong> 。这样的体验，对于科幻和奇幻迷来说，难道还不够激动人心么？</p>
+<p>Lore 在小说的应用由来已久。近来，它们在游戏中的作用也逐渐显现。下面将举例说明这两点。<img src="https://gamingbolt.com/lore-vs-narrative-and-their-impact-on-video-game-story-telling" alt="这篇博文"> 将 lore 与传统的故事叙事（里面称作 cinematic story-telling）进行对比，其中的观点在下面也会谈到，推荐阅读。</p>
+<h2>Explore the Lore</h2>
+<h3>小说</h3>
+<p>这里统一指小说、电影、漫画等线性文本。其中对 lore 的运用实在是太多也太古老了。即使是现实主义小说，也包含着 lore 成分在其中——只不过不是构建出来的，而是真实世界已经存在的。这样的 lore 自不必说，已经埋藏在文本之中了。而虚构世界也需要虚构的 lore ，运用得当，则作用巨大。</p>
+<p>Lore 让故事更加有趣。 <em>银河帝国</em> 系列中，阿西莫夫将神话学与民俗学玩得出神入化，整个小说当做历史小说来读也完全没有问题。不仅每个故事中，众多 lore 交织。更神奇的是，由于小说的时间跨度，前面的人物成为了后面的 lore 。而读者作为“历史的亲历者”，看到故事中的后人对前人世界的敬仰或者误解，不仅享有知道真相的快感，也理解了后人对历史的态度。“你们的生活是一个谎言”，有时会想大声地对人物喊道。不过，谁又能知道过去全部的真相呢？我们也是听着各种各样的 lore 长大的。从这种反思中，我们得以从传统的视角中跳脱出来，不是以怀疑论者的身份，而是一个“趣味猎人”的身份，问出那个问题：“凯撒真的存在过么？”</p>
+<p>好的 lore 会增强一致性（consistency），让虚构的故事真实可信。故事本身是关于特定时间、特定地点的一系列事件的。但当一个故事成为了 lore 后，其影响会无处不在。你可以从不同地方看到了故事产生的各种影响——它们或者指向不同的角度，或者揭示了真相。你还可以从中观察到每个人的反应和态度，从而更加清晰地勾勒出了其性格。奇幻小说天然与 lore 相性相合，比如 <em>猎魔人</em> 、 <em>指环王</em> 等。 <em>冰与火之歌</em> 构建世界的方式正是如此。当一个重要事件发生时，各种人，各种事件中，都会体现其影响，就如同真实的世界一样。影响的范围从王公贵族、神职者、骑士、马夫、乃至乞丐、盗贼；从事件的发生地，到遥远的地方；从现在，到多年以后。再加上冰火独特的轮换视角叙事方式。我简直想不明白为什么还没有历史学家的博士论文写维斯特洛。</p>
+<p>或然历史（alternative history）类的幻想小说中，两个世界的 lore 相通。我们的历史自动成为他们的历史，而我们的世界却与他们的世界如此不同。正因为我们了解 Ada Lovelace 的故事， <em>差分机</em> 中的角色才更加有趣。我们知道第三帝国的恐怖政策，因此在 <em>高城堡里的人</em> 中，它们成为现实才显得格外恐怖。</p>
+<h3>游戏</h3>
+<p>游戏的核心是交互性（interactivity）。我想你已经发现它与故事（story）的矛盾了。</p>
+<p>首先，游戏不是必须有故事。想想 <em>吃豆人</em> ，人们不想知道，也不需要知道吃豆人为什么要吃豆，幽灵为什么要追吃豆人。人们想要的只是摇杆。</p>
+<p>其次，故事反而会伤害交互性。为了达到最佳叙事效果，故事的时间、地点、背景，人物的性格、行为方式都需要精心选择。限制选择，也就限制了交互的自由，也就损害了游戏性。 <em>使命召唤</em> 系列最为评论家厌弃的就是其电影脚本式的 <strong>单向线性</strong> 结构。没有什么挑战的内容，也就无从发挥创造力，玩家所做的不过是在两段 CG 动画中间，跟着各种箭头和标志，完成最简单的动作，毫无乐趣可言。</p>
+<p>与之相对的，最好的游戏是完全的开放世界（open world）游戏么？大家玩过的最自由的开放世界游戏，是现实世界。不过大多数人不会觉得它比某些游戏更具吸引力（否则游戏产业就不复存在了）。可见，如果没有一定的精心的调整与选择，游戏也不会那么好玩。</p>
+<p>我认为，这就是 lore 最具优势的地方：达到了故事与交互性的平衡。</p>
+<p>Lore 本身是故事，是“不必要的故事”，同时也是“有了更好的故事”。以 <em>黑暗之魂</em> 中的 lore 为例，这个游戏将其发挥到了极致。</p>
+<p>“什么？ <em>黑暗之魂</em> 有剧情吗？”说存在当然是存在的，不过你可以完全不看。出色的交互设计本身就让它成为一款好游戏。相应的，主线故事简单：主角需要完成几项小任务，从而完成一个大任务。</p>
+<p>反而是 lore 构成了黑魂真正的剧情。每一件物品都有对应的描述，显然不是给剧中角色看，而是给玩家看的。然而每一件的描述又不那么完整，像是零碎的点。但当你收集到足够多后，就可以像福尔摩斯一样将其联系起来了。合在一起，它们讲述了各种各样的 lore 。</p>
+<p>它们是可选的，是的，不过它们也是“有了更好的”。你在打各式各样的龙类生物时，会在武器上抹上黄金松脂，从而造成更大的伤害。不是因为你试了各种松脂，或者查了攻略，而是因为你了解古代的战士，使用雷电的力量进行猎龙的传说。使用雷电，代表了你已经成为了这个世界的一部分。你表达了对世界传统尊敬与传承，而这个世界也因此奖励你——让作战变得更容易了，同时也展现了其内在一致性。</p>
+<p>你了解角色的背景，他们的为人行事，会对游戏产生新的认知。当你听到了鲁道斯的痛苦、防火女的折磨、巨人王尤姆的悲剧时，你会对自己的使命产生怀疑，这也许会让你做出不同的选择，也许不会。但不同的是，你已经了解了这个世界，进入了这个世界了。</p>
+<p>在这一刻，玩家与角色的割裂不再存在，你不是坐在屏幕前“打怪”、“通关”，而是真正融入到了世界之中，你和你所扮演的角色一样了解世界的过去，世界中的人。而这一切，不是靠 CG 或脚本强加于你的，而是你自己的选择。如此， lore 成为了游戏性与故事性的平衡点，也可以达到理想的角色扮演游戏效果。故事的背景、人物通过 lore 实现，而你在此基础上，理解了你的人物，从而做出选择，完成自己的故事。而不是因为你根本不知为何存在的选项限制，也不是毫无限制的任意开放（如同厨师让你自己决定所有调料用量一样不靠谱）。</p>
+<p>此外，探索 lore 的过程本身就是一个小解谜游戏，自有其中的乐趣。黑魂使用 lore 完成的是背景介绍。而 <em>VA-11 Hall-A: Cyberpunk Bartender Action</em> 中，当前时间的叙事也都是靠类似于 lore 的方式得来的。你作为一个酒保，从客人口中，从新闻软件、在线论坛中，看到同一件事的不同侧面，从而像拼图一样，还原出事件的真相，勾勒出了一个完整的、令人信服的赛博朋克世界。</p>
+<p>最后，系列小说/游戏中，前作的故事成为了后作的 lore ，可算得上是一个自我指涉的粉丝福利。</p>
+<h2>More on the Lore</h2>
+<p>看完了 lore 的作用，那么如何在创作中使用 lore 呢？</p>
+<p>首先，要保证一致性。至少作者心中应当知道事件的真相。如果不同的叙述需要出现矛盾，应当有理有据。如果自己先历史虚无了，那读起来可信度也会下降。</p>
+<p>其次，和其他所有设定一样，不要“老教授的演讲”，也就是一大段对设定的解说，两个本身知道这件事的人，非要说一遍，只是为了给读者进行 exposition 。找一个“读者的眼睛”，一个“华生”，新来的人，失忆的人，记者，解释给他/她听。更好的方式是，在叙述中自然带出，“show, do not tell”。</p>
+<p>此外，读者应该能通过线索大体还原出来，或者至少形成自己的理论。缺失一大块重要部分不一定能增加神秘感，反而可能让人失望。当然也别太容易。</p>
+<p>lore 中的人或事物在故事中出现通常是个好主意。产生一种神话照进现实的超现实效果。</p>
+<h2>结语</h2>
+<p>一篇好好的杂谈写得像论文/作文一样。最后闲谈几句。</p>
+<p>我特别喜欢有 lore 的作品，如果知道请务必推荐给我。此外，正如中文科幻圈中有用 PKD 作为菲利普·K·迪克的简称一样，我一直致力于推广自己发明的“奥森·斯科特·卡德”的简称——奥斯卡。为了让这条迷因扩散，我一定要在这里提一句。</p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>Kuhn, R. (1988). Speech recognition and the frequency of recently used words: A modified markov model for natural language. Proceedings of the 12th conference on Computational linguistics-Volume 1, Association for Computational Linguistics. <a href="#fnref1" class="footnote-backref">↩</a></p>
+<li id="fn1" class="footnote-item"><p>https://www.merriam-webster.com/dictionary/lore <a href="#fnref1" class="footnote-backref">↩</a></p>
 </li>
-<li id="fn2" class="footnote-item"><p>Kuhn, R. and R. De Mori (1990). “A cache-based natural language model for speech recognition.” IEEE transactions on pattern analysis and machine intelligence 12(6): 570-583. <a href="#fnref2" class="footnote-backref">↩</a> <a href="#fnref2:1" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn3" class="footnote-item"><p>Grave, E., et al. (2016). “Improving neural language models with a continuous cache.” arXiv preprint arXiv:1612.04426. <a href="#fnref3" class="footnote-backref">↩</a></p>
+<li id="fn2" class="footnote-item"><p>奥森·斯科特·卡德. 如何创作科幻小说与奇幻小说[M]. 百花文艺出版社, 2015. <a href="#fnref2" class="footnote-backref">↩</a></p>
 </li>
 </ol>
 </section>
@@ -211,7 +232,7 @@ k_{C, j} \times C_j(W, i) $$</p>
 
 
 
-    <a data-url="http://crvdgc.me/2018/08/04/kuhn-cache/" data-id="cjkpgo6e300053lsx7ur6tf5r" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://crvdgc.me/2018/08/11/adorable-lores/" data-id="cjkpgo6fm001f3lsxsn3miax1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -319,20 +340,10 @@ k_{C, j} \times C_j(W, i) $$</p>
         
 <nav id="article-nav">
     
-        <a href="/2018/08/11/continuous-cache/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">下一篇</strong>
-        <p class="article-nav-title">
-        
-            论文笔记： Improving Neural Language Models with a Continuous Cache
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2018/07/31/rnnlm/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/08/11/continuous-cache/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">论文解读 Recurrent neural network based language model</p>
+        <p class="article-nav-title">论文笔记： Improving Neural Language Models with a Continuous Cache</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
