@@ -21,7 +21,7 @@
 <meta property="og:description" content="摘要  块引用代表评论  本文提出了一种类似于 cache 的简化 memory RNN 方法。访问 cache 的方式是隐藏层的点积。和直接使用 memory 的方法相比， cache 无需训练，代价较低，因此空间更大。 前言 序列模型在建立语言模型上的一个问题是无法根据近期历史调整（adapt to recent history）。一个解决思路是 memory ，通常需要学习一个参数化的读写机">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://crvdgc.me/2018/08/11/continuous-cache/fig1.png">
-<meta property="og:updated_time" content="2018-08-11T13:39:39.761Z">
+<meta property="og:updated_time" content="2018-08-11T13:40:41.815Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文笔记： Improving Neural Language Models with a Continuous Cache">
 <meta name="twitter:description" content="摘要  块引用代表评论  本文提出了一种类似于 cache 的简化 memory RNN 方法。访问 cache 的方式是隐藏层的点积。和直接使用 memory 的方法相比， cache 无需训练，代价较低，因此空间更大。 前言 序列模型在建立语言模型上的一个问题是无法根据近期历史调整（adapt to recent history）。一个解决思路是 memory ，通常需要学习一个参数化的读写机">
@@ -189,7 +189,7 @@
 <li>通过产生更一致（coherent）的数据，改善文档级别的长依赖识别</li>
 </ul>
 <h2>数学表示</h2>
-<p>$$p_{cache}(w|h_{1…t}, x_{1…t}) \propto \sum_{i=1}^{t-1} \mathbf{1}<em>{ {w=x</em>{i+1}} }\ \exp (\theta h_t^\mathsf{T}h_i)$$</p>
+<p>$$p_{cache}(w|h_{1…t}, x_{1…t}) \propto \sum_{i=1}^{t-1} \mathbf{1}<em>{ {w=x</em>{i+1}} }\ \exp (\theta h_t^\mathbf{T}h_i)$$</p>
 <p>也就是，从 cache 中生成单词 $w$ 的概率正比于当前隐藏层状态 $h_t$ 与之前所有生成 $w$ 的隐藏层状态 $h_i$ 的点积相似度的指数之和<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。</p>
 <blockquote>
 <p>使用类似 attention 的方法，把单项操作转化为多项求和，是离散操作连续化的常用手段。见下方。</p>
@@ -198,7 +198,7 @@
 <p>语言模型即为二者插值：</p>
 <p>$$p(w|h_{1…t}, x_{1…t}) = (1-\lambda)p_{vocab}(w|h_t) + \lambda p_{cache}(w|h_{1…t}, x_{1…t})$$</p>
 <p>另一种组合方式是 global normalization ：</p>
-<p>$$p(w|h_{1…t}, x_{1…t}) \propto \left( \exp(h_t^\mathsf{T}o_w) + \sum_{i=1}^{t-1} \mathbf{1}<em>{ {w=x</em>{i+1}} }\ \exp (\theta h_t^\mathsf{T}h_i + \alpha) \right)$$</p>
+<p>$$p(w|h_{1…t}, x_{1…t}) \propto \left( \exp(h_t^\mathbf{T}o_w) + \sum_{i=1}^{t-1} \mathbf{1}<em>{ {w=x</em>{i+1}} }\ \exp (\theta h_t^\mathbf{T}h_i + \alpha) \right)$$</p>
 <p>其中参数 $\alpha$ 起着和 $\theta$ 一样控制权重的作用。</p>
 <p>实验部分表明，前者效果更好，且更容易实现，因此下面的方法均指插值。</p>
 <h2>实验</h2>
