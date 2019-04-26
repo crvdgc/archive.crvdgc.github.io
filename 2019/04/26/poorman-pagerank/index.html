@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Poorman&#39;s PageRank | 从零开始 Haskell 实现 PageRank | Down to the Rabbit Hole</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="haskell,social-network,math" />
+    
+    <meta name="description" content="PageRank 算法是一种经典的网页排名算法。基本思想是，每个节点首先赋相等的初值。接下来，根据链接关系将值传播到链接去的节点。如此迭代直到收敛。 需要特殊处理的地方是，出度为 0 的节点需要将值保存到自己。 为了避免自私的节点不引用别人，从而大量积累自己的值，进行平滑处理。给每一个节点乘以缩减因子 $s$ ，再将每个节点加上相等的 $(1-s)/n$ 。注意到这种平滑不改变总值。也即任何时刻所">
+<meta name="keywords" content="haskell,social-network,math">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Poorman&#39;s PageRank | 从零开始 Haskell 实现 PageRank">
+<meta property="og:url" content="https://crvdgc.github.io/2019/04/26/poorman-pagerank/index.html">
+<meta property="og:site_name" content="Down to the Rabbit Hole">
+<meta property="og:description" content="PageRank 算法是一种经典的网页排名算法。基本思想是，每个节点首先赋相等的初值。接下来，根据链接关系将值传播到链接去的节点。如此迭代直到收敛。 需要特殊处理的地方是，出度为 0 的节点需要将值保存到自己。 为了避免自私的节点不引用别人，从而大量积累自己的值，进行平滑处理。给每一个节点乘以缩减因子 $s$ ，再将每个节点加上相等的 $(1-s)/n$ 。注意到这种平滑不改变总值。也即任何时刻所">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://crvdgc.github.io/2019/04/26/poorman-pagerank/network.jpg">
+<meta property="og:updated_time" content="2019-04-26T04:09:00.738Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Poorman&#39;s PageRank | 从零开始 Haskell 实现 PageRank">
+<meta name="twitter:description" content="PageRank 算法是一种经典的网页排名算法。基本思想是，每个节点首先赋相等的初值。接下来，根据链接关系将值传播到链接去的节点。如此迭代直到收敛。 需要特殊处理的地方是，出度为 0 的节点需要将值保存到自己。 为了避免自私的节点不引用别人，从而大量积累自己的值，进行平滑处理。给每一个节点乘以缩减因子 $s$ ，再将每个节点加上相等的 $(1-s)/n$ 。注意到这种平滑不改变总值。也即任何时刻所">
+<meta name="twitter:image" content="https://crvdgc.github.io/2019/04/26/poorman-pagerank/network.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.2.4/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">放映机 方向键 二进制 多巴胺</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/计算机/函数式程序设计/">函数式程序设计</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-poorman-pagerank" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Poorman&#39;s PageRank | 从零开始 Haskell 实现 PageRank
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/04/26/poorman-pagerank/" class="article-date">
+            <time datetime="2019-04-26T03:00:20.000Z" itemprop="datePublished">2019-04-26</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/haskell/">haskell</a>, <a class="tag-link" href="/tags/math/">math</a>, <a class="tag-link" href="/tags/social-network/">social-network</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><a href="https://en.wikipedia.org/wiki/PageRank" target="_blank" rel="noopener">PageRank</a> 算法是一种经典的网页排名算法。基本思想是，每个节点首先赋相等的初值。接下来，根据链接关系将值传播到链接去的节点。如此迭代直到收敛。</p>
+<p>需要特殊处理的地方是，出度为 0 的节点需要将值保存到自己。</p>
+<p>为了避免自私的节点不引用别人，从而大量积累自己的值，进行平滑处理。给每一个节点乘以缩减因子 $s$ ，再将每个节点加上相等的 $(1-s)/n$ 。注意到这种平滑不改变总值。也即任何时刻所有节点的值之和恒为 1 。</p>
+<p>与之相关的还有 <a href="https://en.wikipedia.org/wiki/Eigenvector_centrality" target="_blank" rel="noopener">特征向量中心度 eigenvector centrality</a> ，其区别是，不处理出度为 0 的点，也不进行平滑。而在每一步进行正规化。此外，特征向量也可以使用入度作为标准，仅需将连接矩阵转置即可。</p>
+<p>这里给出一种简洁的三合一 Haskell 实现。不使用任何复杂的库函数，仅用 80 行。从中可以看到 Haskell 的简洁和抽象能力。</p>
+<p>三种算法的核心都是不断迭代直到收敛。将这一逻辑抽象出来得到：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">converge</span> :: <span class="type">Eq</span> a =&gt; (a -&gt; a) -&gt; a -&gt; a</span><br><span class="line"><span class="title">converge</span> f v = fst $ until theSame update (v, f v)</span><br><span class="line">  <span class="keyword">where</span></span><br><span class="line">    theSame (x, y) = x == y</span><br><span class="line">    update (x, y) = (y, f y)</span><br></pre></td></tr></table></figure>
+<p>这里用到了库函数 <code>until :: (a -&gt; Bool) -&gt; (a -&gt; a) -&gt; a -&gt; a</code> 。这个函数接收一个判断函数，一个更新函数和初值。当判断函数返回假时，会应用更新函数。当判断函数返回真时，返回最终值。</p>
+<p><code>converge</code> 函数实际上要构造一个流（stream），即 <code>v : f v : f (f v) : f (f (f v)) : ...</code> 。当流的两个连续元素相等时，我们找到了 <code>f</code> 这个函数的不动点，也就是最终的收敛值。</p>
+<p>因为只需要比较前两个元素，所以我们使用两个元素的元组（tuple）作为保存的状态。<code>until</code> 的判断函数就是两个元素是否相等。更新函数是抛弃第一个元素，对第二个元素应用 <code>f</code> 。</p>
+<p>接下来不同算法的区别，仅在更新函数不同。</p>
+<p>对于 <code>pageRank</code> 来说，就是不断乘以连接矩阵：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">pageRank</span> :: [[<span class="type">Value</span>]] -&gt; [<span class="type">Value</span>] -&gt; [<span class="type">Value</span>]</span><br><span class="line"><span class="title">pageRank</span> a vs = head $ converge (`matmul` a') [vs]</span><br><span class="line">  <span class="keyword">where</span></span><br><span class="line">    a' = compensate a</span><br></pre></td></tr></table></figure>
+<p>其中 <code>matmul :: (Num a) =&gt; [[a]] -&gt; [[a]] -&gt; [[a]]</code> 是矩阵乘法，将在下面给出实现。</p>
+<p>注意到，首先将初值用列表改成 <code>(n, 1)</code> 的行向量，因此每次迭代改为右乘连接矩阵。最后使用 <code>head</code> 再转变成一维列表 <code>(n,)</code> 。下面各个算法做同样的处理。</p>
+<p><code>compensate</code> 函数实现两个功能，对于出度不为 0 的节点，将因子 1 平均分配到每个非零节点上；对于出度为 0 的节点，将 1 分配到自己的位置上（矩阵对角线）。</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">compensate</span> :: [[<span class="type">Value</span>]] -&gt; [[<span class="type">Value</span>]]</span><br><span class="line"><span class="title">compensate</span> = map procOut . zip [<span class="number">0</span> ..]</span><br><span class="line">  <span class="keyword">where</span></span><br><span class="line">    procOut (i, l) =</span><br><span class="line">      <span class="keyword">if</span> any (/= <span class="number">0</span>) l</span><br><span class="line">        <span class="keyword">then</span> distribute l</span><br><span class="line">        <span class="keyword">else</span> oneAt i l</span><br><span class="line">    distribute l =</span><br><span class="line">      <span class="keyword">let</span> v = <span class="number">1.0</span> / (sum l)</span><br><span class="line">       <span class="keyword">in</span> map</span><br><span class="line">            (\x -&gt;</span><br><span class="line">               <span class="keyword">if</span> x == <span class="number">0</span></span><br><span class="line">                 <span class="keyword">then</span> x</span><br><span class="line">                 <span class="keyword">else</span> v)</span><br><span class="line">            l</span><br><span class="line">    oneAt i l =</span><br><span class="line">      <span class="keyword">let</span> (x, _:ys) = splitAt i l</span><br><span class="line">       <span class="keyword">in</span> x ++ <span class="number">1.0</span> : ys</span><br></pre></td></tr></table></figure>
+<p>平滑处理可以改为对连接矩阵进行修改：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">smooth</span> :: <span class="type">Value</span> -&gt; [[<span class="type">Value</span>]] -&gt; [[<span class="type">Value</span>]]</span><br><span class="line"><span class="title">smooth</span> s m = map (map interpolate) m</span><br><span class="line">  <span class="keyword">where</span></span><br><span class="line">    interpolate a = s * a + (<span class="number">1.0</span> - s) / fromIntegral n</span><br><span class="line">    n = length m</span><br></pre></td></tr></table></figure>
+<p>对每一个元素，都用因子 <code>s</code> 缩减，再加上补偿。</p>
+<p>那么平滑后的 PageRank 算法如下：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">smoothPageRank</span> :: <span class="type">Value</span> -&gt; [[<span class="type">Value</span>]] -&gt; [<span class="type">Value</span>] -&gt; [<span class="type">Value</span>]</span><br><span class="line"><span class="title">smoothPageRank</span> s a vs = head $ converge (`matmul` a') $ [vs]</span><br><span class="line">  <span class="keyword">where</span></span><br><span class="line">    a' = smooth s . compensate $ a</span><br></pre></td></tr></table></figure>
+<p>对于特征向量中心性，需要实现正规化：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">normalize</span> :: (<span class="type">Fractional</span> a, <span class="type">Ord</span> a) =&gt; [a] -&gt; [a]</span><br><span class="line"><span class="title">normalize</span> vs =</span><br><span class="line">  <span class="keyword">let</span> m = maximum . (map abs) $ vs</span><br><span class="line">   <span class="keyword">in</span> map (/ m) vs</span><br></pre></td></tr></table></figure>
+<p>即将一个行向量的每个元素除以最大值。</p>
+<p>那么特征向量中心性可以实现如下：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">eiginCentr</span> :: [[<span class="type">Value</span>]] -&gt; [<span class="type">Value</span>] -&gt; [<span class="type">Value</span>]</span><br><span class="line"><span class="title">eiginCentr</span> a vs =</span><br><span class="line">  head $ converge ((map normalize) . (`matmul` a)) [vs]</span><br></pre></td></tr></table></figure>
+<p>以上已经实现了三个算法的核心部分。接下来给出辅助函数的直观定义。</p>
+<p>矩阵乘法：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">dot</span> :: (<span class="type">Num</span> a) =&gt; [a] -&gt; [a] -&gt; a</span><br><span class="line"><span class="title">dot</span> x y = sum $ zipWith (*) x y</span><br><span class="line"></span><br><span class="line"><span class="title">matmul</span> :: (<span class="type">Num</span> a) =&gt; [[a]] -&gt; [[a]] -&gt; [[a]]</span><br><span class="line"><span class="title">matmul</span> a b = map rowMul a</span><br><span class="line">  <span class="keyword">where</span></span><br><span class="line">    b' = transpose b</span><br><span class="line">    rowMul r = map (dot r) b'</span><br></pre></td></tr></table></figure>
+<p>类型转换：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">type</span> <span class="type">Value</span> = <span class="type">Double</span></span></span><br><span class="line"></span><br><span class="line"><span class="title">aFromIntegral</span> :: (<span class="type">Integral</span> a) =&gt; [[a]] -&gt; [[<span class="type">Value</span>]]</span><br><span class="line"><span class="title">aFromIntegral</span> = map (map fromIntegral)</span><br></pre></td></tr></table></figure>
+<p>生成初始平均分配值：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">normalDist</span> :: <span class="type">Int</span> -&gt; [<span class="type">Value</span>]</span><br><span class="line"><span class="title">normalDist</span> n = replicate n $ <span class="number">1.0</span> / fromIntegral n</span><br></pre></td></tr></table></figure>
+<p>图从边表示转化为连接矩阵表示：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">edgeToAdj</span> :: (<span class="type">Integral</span> a) =&gt; [(a, a)] -&gt; [[a]]</span><br><span class="line"><span class="title">edgeToAdj</span> es = [[query i j | j &lt;- [<span class="number">0</span> .. upper]] | i &lt;- [<span class="number">0</span> .. upper]]</span><br><span class="line">  <span class="keyword">where</span></span><br><span class="line">    (ls, rs) = unzip es</span><br><span class="line">    vs = ls ++ rs</span><br><span class="line">    upper = maximum vs <span class="comment">-- lower bound = 0</span></span><br><span class="line">    query i j =</span><br><span class="line">      <span class="keyword">if</span> elem (i, j) es</span><br><span class="line">        <span class="keyword">then</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>其实这里使用 <code>ST monad</code> 更好一点，仅需要 $O(v^2)$ 的时间复杂度。这里用的是直接搜索，需要 $O(v^4)$ 的时间复杂度。</p>
+<p>以上代码实现了所有三个算法的功能，仅用了 80 行代码。完整代码见 <a href="https://gist.github.com/crvdgc/a86d247c87e1f1d324f753187e0205df" target="_blank" rel="noopener">gist</a> 。</p>
+<p>使用下图进行测试：</p>
+<img src="/2019/04/26/poorman-pagerank/network.jpg" title="Network Example">
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- Test Graph 2</span></span><br><span class="line"><span class="title">tg2e</span> =</span><br><span class="line">  [ (<span class="number">0</span>, <span class="number">8</span>)</span><br><span class="line">  , (<span class="number">1</span>, <span class="number">6</span>)</span><br><span class="line">  , (<span class="number">1</span>, <span class="number">10</span>)</span><br><span class="line">  , (<span class="number">1</span>, <span class="number">11</span>)</span><br><span class="line">  , (<span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">  , (<span class="number">2</span>, <span class="number">10</span>)</span><br><span class="line">  , (<span class="number">2</span>, <span class="number">11</span>)</span><br><span class="line">  , (<span class="number">3</span>, <span class="number">15</span>)</span><br><span class="line">  , (<span class="number">3</span>, <span class="number">17</span>)</span><br><span class="line">  , (<span class="number">4</span>, <span class="number">1</span>)</span><br><span class="line">  , (<span class="number">4</span>, <span class="number">6</span>)</span><br><span class="line">  , (<span class="number">4</span>, <span class="number">15</span>)</span><br><span class="line">  , (<span class="number">5</span>, <span class="number">7</span>)</span><br><span class="line">  , (<span class="number">5</span>, <span class="number">8</span>)</span><br><span class="line">  , (<span class="number">5</span>, <span class="number">16</span>)</span><br><span class="line">  , (<span class="number">6</span>, <span class="number">5</span>)</span><br><span class="line">  , (<span class="number">6</span>, <span class="number">8</span>)</span><br><span class="line">  , (<span class="number">6</span>, <span class="number">16</span>)</span><br><span class="line">  , (<span class="number">7</span>, <span class="number">5</span>)</span><br><span class="line">  , (<span class="number">7</span>, <span class="number">13</span>)</span><br><span class="line">  , (<span class="number">7</span>, <span class="number">15</span>)</span><br><span class="line">  , (<span class="number">8</span>, <span class="number">16</span>)</span><br><span class="line">  , (<span class="number">8</span>, <span class="number">5</span>)</span><br><span class="line">  , (<span class="number">8</span>, <span class="number">6</span>)</span><br><span class="line">  , (<span class="number">9</span>, <span class="number">11</span>)</span><br><span class="line">  , (<span class="number">9</span>, <span class="number">10</span>)</span><br><span class="line">  , (<span class="number">9</span>, <span class="number">2</span>)</span><br><span class="line">  , (<span class="number">10</span>, <span class="number">9</span>)</span><br><span class="line">  , (<span class="number">10</span>, <span class="number">11</span>)</span><br><span class="line">  , (<span class="number">10</span>, <span class="number">13</span>)</span><br><span class="line">  , (<span class="number">11</span>, <span class="number">9</span>)</span><br><span class="line">  , (<span class="number">11</span>, <span class="number">10</span>)</span><br><span class="line">  , (<span class="number">11</span>, <span class="number">15</span>)</span><br><span class="line">  , (<span class="number">12</span>, <span class="number">13</span>)</span><br><span class="line">  , (<span class="number">12</span>, <span class="number">15</span>)</span><br><span class="line">  , (<span class="number">12</span>, <span class="number">16</span>)</span><br><span class="line">  , (<span class="number">13</span>, <span class="number">14</span>)</span><br><span class="line">  , (<span class="number">13</span>, <span class="number">15</span>)</span><br><span class="line">  , (<span class="number">13</span>, <span class="number">16</span>)</span><br><span class="line">  , (<span class="number">14</span>, <span class="number">13</span>)</span><br><span class="line">  , (<span class="number">14</span>, <span class="number">12</span>)</span><br><span class="line">  , (<span class="number">14</span>, <span class="number">15</span>)</span><br><span class="line">  , (<span class="number">15</span>, <span class="number">1</span>)</span><br><span class="line">  , (<span class="number">15</span>, <span class="number">9</span>)</span><br><span class="line">  , (<span class="number">15</span>, <span class="number">11</span>)</span><br><span class="line">  , (<span class="number">16</span>, <span class="number">7</span>)</span><br><span class="line">  , (<span class="number">16</span>, <span class="number">8</span>)</span><br><span class="line">  , (<span class="number">16</span>, <span class="number">13</span>)</span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line"><span class="title">tg2</span> = edgeToAdj tg2e</span><br><span class="line"></span><br><span class="line"><span class="title">tg2spr</span> = smoothPageRank <span class="number">0.8</span> (aFromIntegral tg2) (normalDist . length $ tg2)</span><br><span class="line"></span><br><span class="line"><span class="title">printTg2spr</span> :: <span class="type">IO</span> ()</span><br><span class="line"><span class="title">printTg2spr</span> = mapM_ (printf <span class="string">"%.3f\n"</span>) tg2spr</span><br></pre></td></tr></table></figure>
+<p>测试结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ stack ghci</span><br><span class="line">λ&gt; :load pagerank.hs</span><br><span class="line">[1 of 1] Compiling Main             ( pagerank.hs, interpreted )</span><br><span class="line">Ok, one module loaded.</span><br><span class="line">λ&gt; printTg2spr</span><br><span class="line">0.011</span><br><span class="line">0.049</span><br><span class="line">0.034</span><br><span class="line">0.011</span><br><span class="line">0.011</span><br><span class="line">0.054</span><br><span class="line">0.045</span><br><span class="line">0.048</span><br><span class="line">0.069</span><br><span class="line">0.087</span><br><span class="line">0.084</span><br><span class="line">0.104</span><br><span class="line">0.020</span><br><span class="line">0.083</span><br><span class="line">0.033</span><br><span class="line">0.095</span><br><span class="line">0.083</span><br><span class="line">0.078</span><br><span class="line">λ&gt;</span><br></pre></td></tr></table></figure>
+<p>符合预期。</p>
+<p>连矩阵乘法都从头开始写，到整个算法完成，仅需要 80 行代码。核心就是 <code>converge</code> 函数的抽象。这个例子很好地体现了 Haskell 作为函数式语言的优点。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://crvdgc.github.io/2019/04/26/poorman-pagerank/" data-id="cjuxk4knv0007p0lndkai116j" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/crvdgc/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:yokis1997@pku.edu.cn" target="_blank" rel="noopener">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/04/26/poorman-vcg/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Poorman&#39;s SE VCG | 从零开始 Haskell 实现搜索引擎 VCG</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/04/26/poorman-pagerank/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2019/04/26/poorman-pagerank/network.jpg)" alt="Poorman&#39;s PageRank | 从零开始 Haskell 实现 PageRank" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/计算机/函数式程序设计/">函数式程序设计</a></p>
+                            <p class="item-title"><a href="/2019/04/26/poorman-pagerank/" class="title">Poorman&#39;s PageRank | 从零开始 Haskell 实现 PageRank</a></p>
+                            <p class="item-date"><time datetime="2019-04-26T03:00:20.000Z" itemprop="datePublished">2019-04-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/04/26/poorman-vcg/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2019/04/26/poorman-vcg/auction.jpg)" alt="Poorman&#39;s SE VCG | 从零开始 Haskell 实现搜索引擎 VCG" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/计算机/函数式程序设计/">函数式程序设计</a></p>
+                            <p class="item-title"><a href="/2019/04/26/poorman-vcg/" class="title">Poorman&#39;s SE VCG | 从零开始 Haskell 实现搜索引擎 VCG</a></p>
+                            <p class="item-date"><time datetime="2019-04-25T17:44:53.000Z" itemprop="datePublished">2019-04-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/28/奇异人生评论/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2018/10/28/奇异人生评论/life-is-strange.jpg)" alt="【有剧透】奇异人生 - 人类的能力是有极限的" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/科幻/">科幻</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/科幻/评论/">评论</a></p>
+                            <p class="item-title"><a href="/2018/10/28/奇异人生评论/" class="title">【有剧透】奇异人生 - 人类的能力是有极限的</a></p>
+                            <p class="item-date"><time datetime="2018-10-27T17:30:19.000Z" itemprop="datePublished">2018-10-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/11/adorable-lores/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2018/08/11/adorable-lores/Medieval_writing_desk.jpg)" alt="Adorable lores" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/科幻/">科幻</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/科幻/评论/">评论</a></p>
+                            <p class="item-title"><a href="/2018/08/11/adorable-lores/" class="title">Adorable lores</a></p>
+                            <p class="item-date"><time datetime="2018-08-11T13:09:09.000Z" itemprop="datePublished">2018-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/11/continuous-cache/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2018/08/11/continuous-cache/fig1.png)" alt="论文笔记： Improving Neural Language Models with a Continuous Cache" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/计算机/人工智能/">人工智能</a></p>
+                            <p class="item-title"><a href="/2018/08/11/continuous-cache/" class="title">论文笔记： Improving Neural Language Models with a Continuous Cache</a></p>
+                            <p class="item-date"><time datetime="2018-08-11T13:03:55.000Z" itemprop="datePublished">2018-08-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/科幻/">科幻</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/科幻/评论/">评论</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机/">计算机</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/计算机/人工智能/">人工智能</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机/函数式程序设计/">函数式程序设计</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机/工具/">工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机/杂谈/">杂谈</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RNN/">RNN</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cyberpunk/">cyberpunk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/haskell/">haskell</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/language-model/">language-model</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pkd/">pkd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/social-network/">social-network</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/兴趣/">兴趣</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创作/">创作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剧集/">剧集</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字体/">字体</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚拟现实/">虚拟现实</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设定/">设定</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/长依赖/">长依赖</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/RNN/" style="font-size: 20px;">RNN</a> <a href="/tags/cache/" style="font-size: 15px;">cache</a> <a href="/tags/cyberpunk/" style="font-size: 10px;">cyberpunk</a> <a href="/tags/haskell/" style="font-size: 15px;">haskell</a> <a href="/tags/language-model/" style="font-size: 10px;">language-model</a> <a href="/tags/math/" style="font-size: 15px;">math</a> <a href="/tags/pkd/" style="font-size: 10px;">pkd</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/social-network/" style="font-size: 15px;">social-network</a> <a href="/tags/兴趣/" style="font-size: 10px;">兴趣</a> <a href="/tags/创作/" style="font-size: 10px;">创作</a> <a href="/tags/剧集/" style="font-size: 10px;">剧集</a> <a href="/tags/字体/" style="font-size: 10px;">字体</a> <a href="/tags/游戏/" style="font-size: 20px;">游戏</a> <a href="/tags/虚拟现实/" style="font-size: 10px;">虚拟现实</a> <a href="/tags/设定/" style="font-size: 10px;">设定</a> <a href="/tags/长依赖/" style="font-size: 10px;">长依赖</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 crvdgc</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: {
+                inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+                displayMath: [ ['$$','$$'], ['\\[','\\]'] ]
+            } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
