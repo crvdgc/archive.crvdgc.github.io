@@ -21,7 +21,7 @@
 <meta property="og:description" content="VCG 即 Vickrey–Clarke–Groves 机制，是一种具有很多优秀性质的拍卖机制。包括完美匹配、市场出清、在所有可能的清仓价格中总价格最低、总收益达到社会最优、买家按真实估值出价是出价均衡而且是最优策略等等。 搜索引擎广告位拍卖是一种特殊的拍卖形式。详细分析见《网络、群体与市场》 第 15 章。（英文预印本可在 官方网站 合法下载。）假设广告位 $i$ 的点击率 $r_i$ ，广告">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://crvdgc.github.io/2019/04/26/poorman-vcg/auction.jpg">
-<meta property="og:updated_time" content="2019-04-26T02:41:02.117Z">
+<meta property="og:updated_time" content="2019-04-26T02:46:51.288Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Poorman&#39;s SE VCG | 从零开始 Haskell 实现搜索引擎 VCG">
 <meta name="twitter:description" content="VCG 即 Vickrey–Clarke–Groves 机制，是一种具有很多优秀性质的拍卖机制。包括完美匹配、市场出清、在所有可能的清仓价格中总价格最低、总收益达到社会最优、买家按真实估值出价是出价均衡而且是最优策略等等。 搜索引擎广告位拍卖是一种特殊的拍卖形式。详细分析见《网络、群体与市场》 第 15 章。（英文预印本可在 官方网站 合法下载。）假设广告位 $i$ 的点击率 $r_i$ ，广告">
@@ -179,8 +179,8 @@
 <p>这里给出一种超轻量的 Haskell 实现。</p>
 <p>首先对原公式进行变形：</p>
 <p>$$\begin{align}
-p_j &amp;= \sum^{m}<em>{i=j+1} b_i(r</em>{i-1} - r_i) + b_{m+1}r_m \\
-&amp;= \sum^{m+1}<em>{i=j+1} b_i(r</em>{i-1} - r_i)
+p_j &amp;= \sum^{m}_{i=j+1} b_i(r_{i-1} - r_i) + b_{m+1}r_m \\
+&amp;= \sum^{m+1}_{i=j+1} b_i(r_{i-1} - r_i)
 \end{align}$$</p>
 <p>其中 $r_{m+1} := 0, b_{m+1}:= \mathbf{if} \ m=n\  \mathbf{then} \ 0 \ \mathbf{else} \ b_{m+1}$</p>
 <p>可以将原有的点击率列表和每点击估价列表，通过填充 $0$ ，将边界情况统一成一般情况。</p>
@@ -208,7 +208,7 @@ p_j &amp;= \sum^{m}<em>{i=j+1} b_i(r</em>{i-1} - r_i) + b_{m+1}r_m \\
 
 
 
-    <a data-url="https://crvdgc.github.io/2019/04/26/poorman-vcg/" data-id="cjuxgyxyu0007okln71gcx1z1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://crvdgc.github.io/2019/04/26/poorman-vcg/" data-id="cjuxh6fbc0007pcln25fipx79" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
