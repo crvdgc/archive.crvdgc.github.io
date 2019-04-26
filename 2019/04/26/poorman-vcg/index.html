@@ -21,7 +21,7 @@
 <meta property="og:description" content="VCG 即 Vickrey–Clarke–Groves 机制，是一种具有很多优秀性质的拍卖机制。包括完美匹配、市场出清、在所有可能的清仓价格中总价格最低、总收益达到社会最优、买家按真实估值出价是出价均衡而且是最优策略等等。 搜索引擎广告位拍卖是一种特殊的拍卖形式。详细分析见《网络、群体与市场》 第 15 章。（英文预印本可在 官方网站 合法下载。）假设广告位 $i$ 的点击率 $r_i$ ，广告">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://crvdgc.github.io/2019/04/26/poorman-vcg/auction.jpg">
-<meta property="og:updated_time" content="2019-04-25T18:15:16.935Z">
+<meta property="og:updated_time" content="2019-04-26T01:52:10.239Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Poorman&#39;s SE VCG | 从零开始 Haskell 实现搜索引擎 VCG">
 <meta name="twitter:description" content="VCG 即 Vickrey–Clarke–Groves 机制，是一种具有很多优秀性质的拍卖机制。包括完美匹配、市场出清、在所有可能的清仓价格中总价格最低、总收益达到社会最优、买家按真实估值出价是出价均衡而且是最优策略等等。 搜索引擎广告位拍卖是一种特殊的拍卖形式。详细分析见《网络、群体与市场》 第 15 章。（英文预印本可在 官方网站 合法下载。）假设广告位 $i$ 的点击率 $r_i$ ，广告">
@@ -178,7 +178,12 @@
 <p>不妨将广告从点击率高到低排列，广告商按估值从高到低排列。那么估值最高者所支付价格等于第二高的广告商如果取得第一高的广告位能增加的福利（$(r_1 - r_2) b_2$），加上第三高的广告商取得第二高的广告位能增加的福利（$(r_2 - r_3) b_3$）等等。也就是估值矩阵（$v_{ij}$）主对角线减次对角线。</p>
 <p>这里给出一种超轻量的 Haskell 实现。</p>
 <p>首先对原公式进行变形：</p>
-<p>$$\begin{align} p_j &amp;= \sum^{m}<em>{i=j+1} b_i(r</em>{i-1} - r_i) + b_{m+1}r_m \ &amp;= \sum^{m+1}<em>{i=j+1} b_i(r</em>{i-1} - r_i) \end{align}$$</p>
+<p>$$
+\begin{align}
+p_j &amp;= \sum^{m}<em>{i=j+1} b_i(r</em>{i-1} - r_i) + b_{m+1}r_m \
+&amp;= \sum^{m+1}<em>{i=j+1} b_i(r</em>{i-1} - r_i)
+\end{align}
+$$</p>
 <p>其中 $r_{m+1} := 0, b_{m+1}:= \mathbf{if} \ m=n\  \mathbf{then} \ 0 \ \mathbf{else} \ b_{m+1}$</p>
 <p>可以将原有的点击率列表和每点击估价列表，通过填充 $0$ ，将边界情况统一成一般情况。</p>
 <p>给定某广告位之后的点击率列表和估价列表，计算该广告位价格的方法如下：</p>
@@ -205,7 +210,7 @@
 
 
 
-    <a data-url="https://crvdgc.github.io/2019/04/26/poorman-vcg/" data-id="cjuxf24pi0006iolnk6py0g5h" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://crvdgc.github.io/2019/04/26/poorman-vcg/" data-id="cjuxf83gu0007f0lnym7nu1bv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
