@@ -21,7 +21,7 @@
 <meta property="og:description" content="VCG 即 Vickrey–Clarke–Groves 机制，是一种具有很多优秀性质的拍卖机制。包括完美匹配、市场出清、在所有可能的清仓价格中总价格最低、总收益达到社会最优、买家按真实估值出价是出价均衡而且是最优策略等等。 搜索引擎广告位拍卖是一种特殊的拍卖形式。详细分析见《网络、群体与市场》 第 15 章。（英文预印本可在 官方网站 合法下载。）假设广告位 $i$ 的点击率 $r_i$ ，广告">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://crvdgc.github.io/2019/04/26/poorman-vcg/auction.jpg">
-<meta property="og:updated_time" content="2019-04-26T02:46:51.288Z">
+<meta property="og:updated_time" content="2019-04-26T04:30:08.825Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Poorman&#39;s SE VCG | 从零开始 Haskell 实现搜索引擎 VCG">
 <meta name="twitter:description" content="VCG 即 Vickrey–Clarke–Groves 机制，是一种具有很多优秀性质的拍卖机制。包括完美匹配、市场出清、在所有可能的清仓价格中总价格最低、总收益达到社会最优、买家按真实估值出价是出价均衡而且是最优策略等等。 搜索引擎广告位拍卖是一种特殊的拍卖形式。详细分析见《网络、群体与市场》 第 15 章。（英文预印本可在 官方网站 合法下载。）假设广告位 $i$ 的点击率 $r_i$ ，广告">
@@ -189,13 +189,13 @@ p_j &amp;= \sum^{m}_{i=j+1} b_i(r_{i-1} - r_i) + b_{m+1}r_m \\
 <p>首先，<code>padbs</code> 根据上面的推导分别在原有列表尾部添 0 。如果广告商不足（$m=n$），则会使用多余的 0 ；如果已经足够（$m&gt;n$），则添加的 0 会在 <code>zipWith</code> 中被舍弃。</p>
 <p>填充之后，<code>padbs</code> 进行了 <code>tail</code> ，这是因为每个广告上的价格是靠其后广告商估值计算得到的。</p>
 <p><code>padrs</code> 负责计算当前广告位点击率和下一个广告位点击率之差。</p>
-<p>而主函数部分只是一个简单的向量内积。  <code>price</code> 函数整体上实现了，给定某一广告位之后（不包括自己）的点击率列表，和估值列表，可以计算这一广告位的价格。</p>
+<p>而主函数部分只是一个简单的向量内积。  <code>price</code> 函数整体上实现了，给定某一广告位开始（包括自己）的点击率列表，和估值列表，可以计算这一广告位的价格。</p>
 <p>计算所有广告位的价格的方法如下：</p>
 <figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">vcg</span> :: [<span class="type">Int</span>] -&gt; [<span class="type">Int</span>] -&gt; [<span class="type">Int</span>]</span><br><span class="line"><span class="title">vcg</span> rates bids = init $ zipWith price (tails rates) (tails bids)</span><br></pre></td></tr></table></figure>
 <p>这里利用了 <code>tails :: [a] -&gt; [[a]]</code> 函数，需要 <code>import Data.List (tails)</code> ，其作用是接收一个列表，不断去除首元素，再将结果收集成一个列表。</p>
 <p>例如：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">λ&gt; tails <span class="string">"abc"</span></span><br><span class="line">[<span class="string">"abc"</span>, <span class="string">"bc"</span>, <span class="string">"c"</span>, <span class="string">""</span>]</span><br></pre></td></tr></table></figure>
-<p>函数首先生成了每个广告位之后（不包括自己）的点击率和估值列表，再将其作为参数传给 <code>price</code> 。最后加 <code>init</code> 是因为 <code>tails</code> 函数会将空列表作为最后一个元素。我们将这个价格抛弃。</p>
+<p>函数首先生成了每个广告位开始（包括自己）的点击率和估值列表，再将其作为参数传给 <code>price</code> 。最后加 <code>init</code> 是因为 <code>tails</code> 函数会将空列表作为最后一个元素。我们将这个价格抛弃。</p>
 <p>测试如下：</p>
 <figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">λ&gt; vcg [<span class="number">5</span>,<span class="number">3</span>,<span class="number">1</span>] [<span class="number">15</span>,<span class="number">8</span>,<span class="number">5</span>]</span><br><span class="line">[<span class="number">26</span>,<span class="number">10</span>,<span class="number">0</span>]</span><br><span class="line">λ&gt; vcg [<span class="number">5</span>,<span class="number">1</span>] [<span class="number">11</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>]</span><br><span class="line">[<span class="number">33</span>,<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
 <p>实现正确。</p>
@@ -208,7 +208,7 @@ p_j &amp;= \sum^{m}_{i=j+1} b_i(r_{i-1} - r_i) + b_{m+1}r_m \\
 
 
 
-    <a data-url="https://crvdgc.github.io/2019/04/26/poorman-vcg/" data-id="cjuxk4kny000ap0ln0quc4bhy" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://crvdgc.github.io/2019/04/26/poorman-vcg/" data-id="cjuxkvhmm0006aolnodxjxizw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
