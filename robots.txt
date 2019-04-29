@@ -1,0 +1,16 @@
+# hexo robots.txt
+User-agent: *
+Allow: /
+Allow: /2018/
+Allow: /2019/
+Allow: /about/
+Allow: /archives/
+Allow: /categories/
+Allow: /tags/
+
+Disallow: /js/
+Disallow: /css/
+Disallow: /libs/
+Disallow: /fonts/
+
+Sitemap: https://crvdgc.github.io/sitemap.xml
