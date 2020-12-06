@@ -6,26 +6,26 @@
     
 
     
-    <title>论文笔记： Improving Neural Language Models with a Continuous Cache | Down to the Rabbit Hole</title>
+    <title>九章：真的是快一百亿倍的量子计算机吗 | Down to the Rabbit Hole</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="RNN,cache,NLP">
+        <meta name="keywords" content="新闻,量子计算,计算理论">
     
-    <meta name="description" content="摘要  块引用代表评论  本文提出了一种类似于 cache 的简化 memory RNN 方法。访问 cache 的方式是隐藏层的点积。和直接使用 memory 的方法相比， cache 无需训练，代价较低，因此空间更大。 前言 序列模型在建立语言模型上的一个问题是无法根据近期历史调整（adapt to recent history）。一个解决思路是 memory ，通常需要学习一个参数化的读写机">
-<meta name="keywords" content="RNN,cache,NLP">
+    <meta name="description" content="据新华网报道，中科大潘建伟团队制作的新量子计算机九章，比谷歌量子计算机快一百亿倍。本文将从计算理论的角度来说明，该如何理解这一结论。 首先一个重要的问题是，九章是量子计算机吗？九章的确有电子元件，并且使用了量子效应，可以执行一个量子算法，为何不能称为量子计算机呢？ 要回答这个问题，首先可以考虑一下，耳机是计算机吗？毕竟耳机内部也包含电子元件，并且完成了将电流信号转化成声音信号的算法，但我们通常不将">
+<meta name="keywords" content="新闻,量子计算,计算理论">
 <meta property="og:type" content="article">
-<meta property="og:title" content="论文笔记： Improving Neural Language Models with a Continuous Cache">
-<meta property="og:url" content="https://crvdgc.github.io/2018/08/11/continuous-cache/index.html">
+<meta property="og:title" content="九章：真的是快一百亿倍的量子计算机吗">
+<meta property="og:url" content="https://crvdgc.github.io/2020/12/07/jiuzhang/index.html">
 <meta property="og:site_name" content="Down to the Rabbit Hole">
-<meta property="og:description" content="摘要  块引用代表评论  本文提出了一种类似于 cache 的简化 memory RNN 方法。访问 cache 的方式是隐藏层的点积。和直接使用 memory 的方法相比， cache 无需训练，代价较低，因此空间更大。 前言 序列模型在建立语言模型上的一个问题是无法根据近期历史调整（adapt to recent history）。一个解决思路是 memory ，通常需要学习一个参数化的读写机">
+<meta property="og:description" content="据新华网报道，中科大潘建伟团队制作的新量子计算机九章，比谷歌量子计算机快一百亿倍。本文将从计算理论的角度来说明，该如何理解这一结论。 首先一个重要的问题是，九章是量子计算机吗？九章的确有电子元件，并且使用了量子效应，可以执行一个量子算法，为何不能称为量子计算机呢？ 要回答这个问题，首先可以考虑一下，耳机是计算机吗？毕竟耳机内部也包含电子元件，并且完成了将电流信号转化成声音信号的算法，但我们通常不将">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://crvdgc.github.io/2018/08/11/continuous-cache/fig1.png">
-<meta property="og:updated_time" content="2018-08-11T13:59:29.000Z">
+<meta property="og:image" content="https://crvdgc.github.io/2020/12/07/jiuzhang/pachinko.jpg">
+<meta property="og:updated_time" content="2020-12-06T19:38:00.925Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="论文笔记： Improving Neural Language Models with a Continuous Cache">
-<meta name="twitter:description" content="摘要  块引用代表评论  本文提出了一种类似于 cache 的简化 memory RNN 方法。访问 cache 的方式是隐藏层的点积。和直接使用 memory 的方法相比， cache 无需训练，代价较低，因此空间更大。 前言 序列模型在建立语言模型上的一个问题是无法根据近期历史调整（adapt to recent history）。一个解决思路是 memory ，通常需要学习一个参数化的读写机">
-<meta name="twitter:image" content="https://crvdgc.github.io/2018/08/11/continuous-cache/fig1.png">
+<meta name="twitter:title" content="九章：真的是快一百亿倍的量子计算机吗">
+<meta name="twitter:description" content="据新华网报道，中科大潘建伟团队制作的新量子计算机九章，比谷歌量子计算机快一百亿倍。本文将从计算理论的角度来说明，该如何理解这一结论。 首先一个重要的问题是，九章是量子计算机吗？九章的确有电子元件，并且使用了量子效应，可以执行一个量子算法，为何不能称为量子计算机呢？ 要回答这个问题，首先可以考虑一下，耳机是计算机吗？毕竟耳机内部也包含电子元件，并且完成了将电流信号转化成声音信号的算法，但我们通常不将">
+<meta name="twitter:image" content="https://crvdgc.github.io/2020/12/07/jiuzhang/pachinko.jpg">
     
 
     
@@ -134,18 +134,18 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/计算机/人工智能/">人工智能</a>
+    <a class="page-title-link" href="/categories/科普/">科普</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/科普/计算机/">计算机</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-continuous-cache" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-jiuzhang" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        论文笔记： Improving Neural Language Models with a Continuous Cache
+        九章：真的是快一百亿倍的量子计算机吗
         </h1>
     
 
@@ -155,78 +155,56 @@
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2018/08/11/continuous-cache/" class="article-date">
-            <time datetime="2018-08-11T12:03:55.000Z" itemprop="datePublished">2018-08-11</time>
+        <a href="/2020/12/07/jiuzhang/" class="article-date">
+            <time datetime="2020-12-06T19:32:58.000Z" itemprop="datePublished">2020-12-07</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/RNN/">RNN</a>, <a class="tag-link" href="/tags/cache/">cache</a>
+        <a class="tag-link" href="/tags/新闻/">新闻</a>, <a class="tag-link" href="/tags/计算理论/">计算理论</a>, <a class="tag-link" href="/tags/量子计算/">量子计算</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h2>摘要</h2>
-<blockquote>
-<p>块引用代表评论</p>
-</blockquote>
-<p>本文提出了一种类似于 cache 的简化 memory RNN 方法。访问 cache 的方式是隐藏层的点积。和直接使用 memory 的方法相比， cache 无需训练，代价较低，因此空间更大。</p>
-<h2>前言</h2>
-<p>序列模型在建立语言模型上的一个问题是无法根据近期历史调整（adapt to recent history）。一个解决思路是 memory ，通常需要学习一个参数化的读写机制（learn a parametrizable mechanism to read or write to memory cells）。高昂的代价限制了其 memory 大小和可使用的数据量。</p>
-<p>本文提出的 Neural Cache Model 主要思想和 count-based model （n-gram） 中的 cache 方法类似，可以看作其连续版本。前者的解读请看 <a href="/2018/08/04/kuhn-cache/" title="Kuhn 的 cache 模型">Kuhn 的 cache 模型</a> 。</p>
-<h2>模型</h2>
-<img src="/2018/08/11/continuous-cache/fig1.png" title="Fig. 1">
-<h3>思路</h3>
-<p>语言学知识表明，一个单词在文档中出现一次过后，更有可能再次出现。因此，除了全局模型以外，cache 储存部分近期历史。使用 cache 得到的结果与全局模型的结果进行差值（interpolate）得到最终结果。</p>
-<p>优点有：</p>
-<ul>
-<li>语言模型能高效适应新领域</li>
-<li>见过 OOV (out-of-vocabulary) 单词一次后，即可预测</li>
-<li>通过产生更一致（coherent）的数据，改善文档级别的长依赖识别</li>
-</ul>
-<h2>数学表示</h2>
-<p>$$p_{cache}(w|h_{1…t}, x_{1…t}) \propto \sum_{i=1}^{t-1} 1_{ {w=x_{i+1}}}\ \exp (\theta h_t^\mathsf{T} h_i)$$</p>
-<p>也就是，从 cache 中生成单词 $w$ 的概率正比于当前隐藏层状态 $h_t$ 与之前所有生成 $w$ 的隐藏层状态 $h_i$ 的点积相似度的指数之和<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。</p>
-<blockquote>
-<p>使用类似 attention 的方法，把单项操作转化为多项求和，是离散操作连续化的常用手段。见下方。</p>
-</blockquote>
-<p>可见，隐藏层状态作为 cache 的索引，当前隐藏层与 cache 中隐藏层状态相似，会提高对应单词的产生概率。符合上面的思路，而且更易生成重复模式。</p>
-<p>语言模型即为二者插值：</p>
-<p>$$p(w|h_{1…t}, x_{1…t}) = (1-\lambda)p_{vocab}(w|h_t) + \lambda p_{cache}(w|h_{1…t}, x_{1…t})$$</p>
-<p>另一种组合方式是 global normalization ：</p>
-<p>$$p(w|h_{1…t}, x_{1…t}) \propto \left( \exp(h_t^\mathsf{T}o_w) + \sum_{i=1}^{t-1} 1_{ {w=x_{i+1}} }\ \exp (\theta h_t^\mathsf{T}h_i + \alpha) \right)$$</p>
-<p>其中参数 $\alpha$ 起着和 $\theta$ 一样控制权重的作用。</p>
-<p>实验部分表明，前者效果更好，且更容易实现，因此下面的方法均指插值。</p>
-<h2>实验</h2>
-<h2>PTB</h2>
-<img src="/2018/08/11/continuous-cache/table1.png" title="Table 1">
-<p>在 PTB 上的实验表明已经达到 state-of-the-art 。</p>
-<h3>中等规模数据集</h3>
-<p>在中等规模数据集上进行实验。数据集使用 wikitext103 和 wikitext2 （训练集规模分别为 103M 和 2M ，测试集相同），还有 text8 （同样从 wikipedia 使用不同预处理得到）。</p>
-<p>首先看可扩展性：</p>
-<img src="/2018/08/11/continuous-cache/fig4.png" title="Fig. 4">
-<p>Fig. 4 展示了和 unigram 加 cache 相比，本文模型效果和扩展性更佳。</p>
-<img src="/2018/08/11/continuous-cache/table2.png" title="Table 2">
-<p>Table 2 表明，和 LSTM baseline 相比，本模型在 2M 上提升 30% ，在 103M 上提升 16% 。符合 (Goodman, 2001)<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> 观察到的，在大数据集上，复杂技巧带来的提升会下降。和 Pointer Sentinel LSTM <sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> 相比， cache 大小同样为 100 时，在 2M 上效果差不多。但 cache 方法计算代价低，因此很容易更大的 cache 。使用 2000 的 cache 大小相比，效果提升了很多。</p>
-<p>另外，注意到用 103M 的 LSTM baseline 已经比 2M 上的复杂方法好很多了，因此认为需要在更大数据集上实验（虽然本文没继续做了）。</p>
-<blockquote>
-<p>一个拿 103M 训出来的 LSTM 已经强过 2M 上比较复杂的模型了。说明数据真实王道。学术上用相同数据量比较，为了公平。实际做出产品的话，没人管公平不公平了。</p>
-</blockquote>
-<h2>结论</h2>
-<p>本文中的模型从技术上虽然属于 memory-augmented RNN ，但其结构可以避免学习内存查找部分（memory lookup component），因此计算代价十分低，也很容易加到现有的模型上。</p>
+            <p>据<a href="http://www.xinhuanet.com/tech/2020-12/06/c_1126826347.htm" target="_blank" rel="noopener">新华网报道</a>，中科大潘建伟团队制作的新量子计算机九章，比谷歌量子计算机快一百亿倍。本文将从计算理论的角度来说明，该如何理解这一结论。</p>
+<p>首先一个重要的问题是，九章是量子<strong>计算机</strong>吗？九章的确有电子元件，并且使用了量子效应，可以执行一个量子算法，为何不能称为量子计算机呢？</p>
+<p>要回答这个问题，首先可以考虑一下，耳机是<strong>计算机</strong>吗？毕竟耳机内部也包含电子元件，并且完成了将电流信号转化成声音信号的算法，但我们通常不将耳机称为电子<strong>计算机</strong>，而只是电子<strong>机器</strong>。是什么将耳机和电脑区别开来呢？</p>
+<p>我们知道，不同的机器可以执行不同的功能。我们的生活中有很多专用机器，比如收银机、汽车的刹车辅助系统、导弹的制导系统等等。它们都有不同的结构，完成各自的专用任务。如果没有一项发现的话，也许人们直到现在也得为每一项不同的任务设计一个新的专用机器。1933年前后，英国数学家阿兰·图灵以及其他数学家意识到，在不同的计算任务背后，隐藏着一个相同的抽象结构<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。对这种抽象结构的各种表述中，以图灵的<strong>图灵机</strong>最广为人知。</p>
+<p>简单来说，图灵机就是一个概念上的机器，根据自身的结构，在一个无限长的纸带上完成读写信息的任务。一个最简单的图灵机例子就是计算生成1/3的小数表示，只需按下面两个步骤执行即可：</p>
+<ol>
+<li>在纸带上打印「0」和小数点。</li>
+<li>不断在纸带上打印「3」。</li>
+</ol>
+<p>运行这个机器，就可以在纸带上得到结果「0.3333……」。当然，图灵所使用的模型更加抽象，只包含一些基本操作，并且使用二进制编码，但这些都不影响原理上的讨论。图灵在论文中还给出了一个计算圆周率π的图灵机。每一个的图灵机就如同现实中的专用机器一样，它们都有自己的专门任务。正如一个收银机无法完成导弹的制导一样，一个计算1/3的图灵机，无法完成计算π的任务。</p>
+<p>但图灵接下来的结论让人十分震惊：通过对图灵机的操作也进行编码，图灵将每个专用的图灵机都转化成了一系列指令。接着，他证明了存在一个通用图灵机（Universal Turing Machine），只要把某个专用图灵机对应的指令放进去，它就能表现得像那个专用图灵机一样。换句话说，通用图灵机可以模拟任何的专用图灵机，因此才被称为是通用的（universal）。</p>
+<p>这个结果其实十分有趣。通用图灵机可以用很少的部件制作而成（事实上，图灵在论文中给出了一个完整构造，从而证明了通用图灵机的存在），但却能「模仿」无穷无尽的专用图灵机。现在的每个人对这些概念其实十分熟悉：因为每一个电脑、手机都是通用图灵机，而不同的软件就是不同专用图灵机的指令。电脑不仅可以计算1/3和π，还能通过执行音乐播放器软件，做到原来一台专门的MP3机器才能做到的事情。对此，人们已经习以为常，并不觉得奇怪。但如果仔细考虑一下的话，电脑的灵活性的确很令人惊讶。</p>
+<p>这也就回答了上面，耳机和电脑之间的区别。只有当一台机器能执行通用计算任务的时候，我们才将它称为计算机。耳机虽然能高效地完成一项特定的计算任务，但因为不具有通用性，我们并不将其称为计算机。一个更贴近生活的例子是，印章可以快速地复制一个图案，但如果想要复制任意图案的话，还是需要一台通用性更强的复印机。</p>
+<p>类似的，九章其实是一个量子<strong>机器</strong>，而不是一个量子<strong>计算机</strong>。为何这么说呢？</p>
+<p>对应于经典算法，计算机科学家为量子计算任务设计了一套「编程语言」，称为量子电路（quantum circuit）。令人们感兴趣的量子计算任务，都可以使用一个量子电路来描述。当然，我们可以将每一个量子电路都实际用器件搭出来，形成一个专门的物理量子电路，但这样就太麻烦了。</p>
+<p>在制作经典电路时，计算机科学家为了简化器件的种类，发现了任何逻辑电路都可以使用与、或、非三种逻辑门来实现。换句话说，只需要做出三种器件，再用一定的方式将它们组合到一起，就可以完成任意逻辑电路的功能。有了任意的逻辑电路，就可以很轻松地做出物理上的通用图灵机了。接下来，如果想让这台机器解决什么问题，我们只需要为它编程就好。</p>
+<p>类似的，计算机科学家发现，任意的量子电路都可以转化为由单量子比特门和 CNOT 门构成的电路<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>。也就是说，只需要做出能实现这两个门的器件，再通过一定方式将它们组合到一起，就可以实现通用的量子计算。这就是开头那篇新闻报道中所说的，谷歌的量子计算机实现的「随机线路取样」。实际上，任何其他的量子计算机，指的都是可以做到执行任意量子电路的计算系统。很少有人将不能进行通用量子计算的系统，称为「量子计算机」。</p>
+<p>那么九章用来展示「量子优越性」（quantum supremacy）的「高斯玻色取样」是什么呢？简单来说，就是预测一个光量子系统演化的结果<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>。用经典计算机模拟量子系统十分复杂，因此量子计算机概念最早提出者之一的物理学家理查德·费曼就设想，量子计算机的一大应用就是模拟量子系统本身。但问题的关键在于，拥有一台通用的量子计算机，可以模拟任意专门的量子系统（只不过速度可能很慢），但拥有一台专门的模拟一种量子系统的机器，并不等于能完成其他的量子计算。</p>
+<p>就我个人理解，并非任意量子电路都可以转化为「高斯玻色取样」。因此，「悬铃木」以及其他所有量子计算机的通用性，都严格高于九章。事实上，我不知道任何有意思的问题（比如密码学、机器学习）可以编码成为「高斯玻色取样」问题，而它们全都能编码成为通用的量子电路，并可以在量子计算机上运行。因此，很可能九章只是再次证明了这样一个事实：用经典计算机模拟量子系统很困难。这一事实虽然广为人知，但这次使用实验证明了这一点。九章选取了一个困难、但可能没有应用价值的问题，证明了它的确很困难。</p>
+<p>举例来说就是，对于下面的弹球机，请预测不同力度弹出的小球最终的结果如何？</p>
+<img src="/2020/12/07/jiuzhang/pachinko.jpg" title="弹球机（来源：wikimedia）">
+<p>如果使用计算机模拟的话，可能需要仔细建模小球、弹杆、还有机器内部的状态等等，十分复杂。另一个更「高效」的计算方法是，直接拿一台这样的机器，用给定的力度弹出，最后汇报结果。后一种方法可能的确比前面的快很多，但这个问题本身只是说明了物理系统模拟的困难性。并不是任意问题都可以编码成弹球机的小球结果。</p>
+<p>报道中称，「无论是谷歌的『悬铃木』处理『随机线路取样』，还是『九章』求解『高斯玻色取样』，都只能用来解决某一个特定问题」，但我们可以看到，两个问题的重要性不可同日而语。毕竟我们也可以说，电脑和耳机都只能用来解决某一个特定问题：耳机只能将电信号转化为声音信号，电脑不过是可以通过重新编程模拟任何计算系统而已。</p>
+<p>而报道中的另一个引人注目的数字是，「『九章』比『悬铃木』快100亿倍」。那么这个数字是怎么算出来的呢？报道中说，是与「最快的超算等效比较」而得出的。也就是说，如果「悬铃木」比某一个超算快N倍的话，九章则快100亿N倍。但上面的分析已经指出，二者并没有从事相同的计算任务，因此这样的比较很难有什么实际意义。比如，我们可以选取一个无法被编码为「高斯玻色取样」的量子计算问题，比如 Shor 算法<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>，它可以在「悬铃木」上经过一段时间得出结果。但因为九章并非通用量子计算机，它根本无法解决这个问题，此时讨论速度意义不大。</p>
+<p>总而言之，「『九章』比『悬铃木』快100亿倍」，就好像在说，印章的速度比复印机快十倍一样。对于复制印章上的图案而言，的确如此。但后者的通用性远高于前者，而且前者的印章印出来的还很可能是一个没人需要的图案。</p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>Sainbayar Sukhbaatar, Szlam Arthur, Jason Weston, and Rob Fergus. End-to-end memory networks. In NIPS, 2015. <a href="#fnref1" class="footnote-backref">↩</a></p>
+<li id="fn1" class="footnote-item"><p>Turing, Alan Mathison. “On computable numbers, with an application to the Entscheidungsproblem.” Proceedings of the London mathematical society 2.1 (1937): 230-265. <a href="#fnref1" class="footnote-backref">↩</a></p>
 </li>
-<li id="fn2" class="footnote-item"><p>Joshua T Goodman. A bit of progress in language modeling. Computer Speech &amp; Language, 2001. <a href="#fnref2" class="footnote-backref">↩</a></p>
+<li id="fn2" class="footnote-item"><p>Nielsen, Michael A., and Isaac Chuang. “Quantum computation and quantum information.” (2002). <a href="#fnref2" class="footnote-backref">↩</a></p>
 </li>
-<li id="fn3" class="footnote-item"><p>Stephen Merity, Caiming Xiong, James Bradbury, and Richard Socher. Pointer sentinel mixture models. arXiv
-preprint arXiv:1609.07843, 2016. <a href="#fnref3" class="footnote-backref">↩</a></p>
+<li id="fn3" class="footnote-item"><p>https://www.sciencenews.org/article/new-light-based-quantum-computer-jiuzhang-supremacy <a href="#fnref3" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>Shor, Peter W. “Algorithms for quantum computation: discrete logarithms and factoring.” Proceedings 35th annual symposium on foundations of computer science. Ieee, 1994. <a href="#fnref4" class="footnote-backref">↩</a></p>
 </li>
 </ol>
 </section>
@@ -237,7 +215,7 @@ preprint arXiv:1609.07843, 2016. <a href="#fnref3" class="footnote-backref">↩<
 
 
 
-    <a data-url="https://crvdgc.github.io/2018/08/11/continuous-cache/" data-id="ckidj0mvd0002eww2w3ollro7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://crvdgc.github.io/2020/12/07/jiuzhang/" data-id="ckidj0mye0035eww287g6ahmn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -337,20 +315,10 @@ preprint arXiv:1609.07843, 2016. <a href="#fnref3" class="footnote-backref">↩<
         
 <nav id="article-nav">
     
-        <a href="/2018/08/11/adorable-lores/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">下一篇</strong>
-        <p class="article-nav-title">
-        
-            Adorable lores
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2018/08/04/kuhn-cache/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2020/12/05/tenet/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">Cache Method in n-gram</p>
+        <p class="article-nav-title">信条：本可以更自由的点子科幻</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     

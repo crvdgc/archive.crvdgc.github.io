@@ -6,26 +6,17 @@
     
 
     
-    <title>论文笔记： Improving Neural Language Models with a Continuous Cache | Down to the Rabbit Hole</title>
+    <title>标签：: 量子计算 | Down to the Rabbit Hole</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="RNN,cache,NLP">
-    
-    <meta name="description" content="摘要  块引用代表评论  本文提出了一种类似于 cache 的简化 memory RNN 方法。访问 cache 的方式是隐藏层的点积。和直接使用 memory 的方法相比， cache 无需训练，代价较低，因此空间更大。 前言 序列模型在建立语言模型上的一个问题是无法根据近期历史调整（adapt to recent history）。一个解决思路是 memory ，通常需要学习一个参数化的读写机">
-<meta name="keywords" content="RNN,cache,NLP">
-<meta property="og:type" content="article">
-<meta property="og:title" content="论文笔记： Improving Neural Language Models with a Continuous Cache">
-<meta property="og:url" content="https://crvdgc.github.io/2018/08/11/continuous-cache/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Down to the Rabbit Hole">
+<meta property="og:url" content="https://crvdgc.github.io/tags/量子计算/index.html">
 <meta property="og:site_name" content="Down to the Rabbit Hole">
-<meta property="og:description" content="摘要  块引用代表评论  本文提出了一种类似于 cache 的简化 memory RNN 方法。访问 cache 的方式是隐藏层的点积。和直接使用 memory 的方法相比， cache 无需训练，代价较低，因此空间更大。 前言 序列模型在建立语言模型上的一个问题是无法根据近期历史调整（adapt to recent history）。一个解决思路是 memory ，通常需要学习一个参数化的读写机">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://crvdgc.github.io/2018/08/11/continuous-cache/fig1.png">
-<meta property="og:updated_time" content="2018-08-11T13:59:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="论文笔记： Improving Neural Language Models with a Continuous Cache">
-<meta name="twitter:description" content="摘要  块引用代表评论  本文提出了一种类似于 cache 的简化 memory RNN 方法。访问 cache 的方式是隐藏层的点积。和直接使用 memory 的方法相比， cache 无需训练，代价较低，因此空间更大。 前言 序列模型在建立语言模型上的一个问题是无法根据近期历史调整（adapt to recent history）。一个解决思路是 memory ，通常需要学习一个参数化的读写机">
-<meta name="twitter:image" content="https://crvdgc.github.io/2018/08/11/continuous-cache/fig1.png">
+<meta name="twitter:title" content="Down to the Rabbit Hole">
     
 
     
@@ -134,176 +125,74 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/计算机/">计算机</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/计算机/人工智能/">人工智能</a>
+    <i class="icon fa fa-tag"></i>标签：: <em>量子计算</em>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-continuous-cache" class="article article-single article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
+                            
+
+    
+    
         
-            <header class="article-header">
-                
+        
+        <section class="archives-wrap">
+            <div class="archive-year-wrap">
+                <a href="/archives/2020" class="archive-year"><i class="icon fa fa-calendar-o"></i>2020</a>
+            </div>
+            <div class="archives">
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2020/12/07/jiuzhang/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2020/12/07/jiuzhang/pachinko.jpg)" alt="九章：真的是快一百亿倍的量子计算机吗" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span><a href="https://crvdgc.github.io/2020/12/07/jiuzhang/#isso-thread"></a></span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/科普/">科普</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/科普/计算机/">计算机</a>
+            </div>
+            <div class="date"><time datetime="2020-12-06T19:32:58.000Z" itemprop="datePublished">2020-12-07</time></div>
+        </div>
+        
     
         <h1 class="article-title" itemprop="name">
-        论文笔记： Improving Neural Language Models with a Continuous Cache
+        <a href="/2020/12/07/jiuzhang/">九章：真的是快一百亿倍的量子计算机吗</a>
         </h1>
     
 
-            </header>
-        
-        
-            <div class="article-meta">
-                
-    <div class="article-date">
-        <a href="/2018/08/11/continuous-cache/" class="article-date">
-            <time datetime="2018-08-11T12:03:55.000Z" itemprop="datePublished">2018-08-11</time>
-        </a>
-    </div>
-
-                
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/RNN/">RNN</a>, <a class="tag-link" href="/tags/cache/">cache</a>
-    </div>
-
-            </div>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-            <h2>摘要</h2>
-<blockquote>
-<p>块引用代表评论</p>
-</blockquote>
-<p>本文提出了一种类似于 cache 的简化 memory RNN 方法。访问 cache 的方式是隐藏层的点积。和直接使用 memory 的方法相比， cache 无需训练，代价较低，因此空间更大。</p>
-<h2>前言</h2>
-<p>序列模型在建立语言模型上的一个问题是无法根据近期历史调整（adapt to recent history）。一个解决思路是 memory ，通常需要学习一个参数化的读写机制（learn a parametrizable mechanism to read or write to memory cells）。高昂的代价限制了其 memory 大小和可使用的数据量。</p>
-<p>本文提出的 Neural Cache Model 主要思想和 count-based model （n-gram） 中的 cache 方法类似，可以看作其连续版本。前者的解读请看 <a href="/2018/08/04/kuhn-cache/" title="Kuhn 的 cache 模型">Kuhn 的 cache 模型</a> 。</p>
-<h2>模型</h2>
-<img src="/2018/08/11/continuous-cache/fig1.png" title="Fig. 1">
-<h3>思路</h3>
-<p>语言学知识表明，一个单词在文档中出现一次过后，更有可能再次出现。因此，除了全局模型以外，cache 储存部分近期历史。使用 cache 得到的结果与全局模型的结果进行差值（interpolate）得到最终结果。</p>
-<p>优点有：</p>
-<ul>
-<li>语言模型能高效适应新领域</li>
-<li>见过 OOV (out-of-vocabulary) 单词一次后，即可预测</li>
-<li>通过产生更一致（coherent）的数据，改善文档级别的长依赖识别</li>
-</ul>
-<h2>数学表示</h2>
-<p>$$p_{cache}(w|h_{1…t}, x_{1…t}) \propto \sum_{i=1}^{t-1} 1_{ {w=x_{i+1}}}\ \exp (\theta h_t^\mathsf{T} h_i)$$</p>
-<p>也就是，从 cache 中生成单词 $w$ 的概率正比于当前隐藏层状态 $h_t$ 与之前所有生成 $w$ 的隐藏层状态 $h_i$ 的点积相似度的指数之和<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。</p>
-<blockquote>
-<p>使用类似 attention 的方法，把单项操作转化为多项求和，是离散操作连续化的常用手段。见下方。</p>
-</blockquote>
-<p>可见，隐藏层状态作为 cache 的索引，当前隐藏层与 cache 中隐藏层状态相似，会提高对应单词的产生概率。符合上面的思路，而且更易生成重复模式。</p>
-<p>语言模型即为二者插值：</p>
-<p>$$p(w|h_{1…t}, x_{1…t}) = (1-\lambda)p_{vocab}(w|h_t) + \lambda p_{cache}(w|h_{1…t}, x_{1…t})$$</p>
-<p>另一种组合方式是 global normalization ：</p>
-<p>$$p(w|h_{1…t}, x_{1…t}) \propto \left( \exp(h_t^\mathsf{T}o_w) + \sum_{i=1}^{t-1} 1_{ {w=x_{i+1}} }\ \exp (\theta h_t^\mathsf{T}h_i + \alpha) \right)$$</p>
-<p>其中参数 $\alpha$ 起着和 $\theta$ 一样控制权重的作用。</p>
-<p>实验部分表明，前者效果更好，且更容易实现，因此下面的方法均指插值。</p>
-<h2>实验</h2>
-<h2>PTB</h2>
-<img src="/2018/08/11/continuous-cache/table1.png" title="Table 1">
-<p>在 PTB 上的实验表明已经达到 state-of-the-art 。</p>
-<h3>中等规模数据集</h3>
-<p>在中等规模数据集上进行实验。数据集使用 wikitext103 和 wikitext2 （训练集规模分别为 103M 和 2M ，测试集相同），还有 text8 （同样从 wikipedia 使用不同预处理得到）。</p>
-<p>首先看可扩展性：</p>
-<img src="/2018/08/11/continuous-cache/fig4.png" title="Fig. 4">
-<p>Fig. 4 展示了和 unigram 加 cache 相比，本文模型效果和扩展性更佳。</p>
-<img src="/2018/08/11/continuous-cache/table2.png" title="Table 2">
-<p>Table 2 表明，和 LSTM baseline 相比，本模型在 2M 上提升 30% ，在 103M 上提升 16% 。符合 (Goodman, 2001)<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> 观察到的，在大数据集上，复杂技巧带来的提升会下降。和 Pointer Sentinel LSTM <sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> 相比， cache 大小同样为 100 时，在 2M 上效果差不多。但 cache 方法计算代价低，因此很容易更大的 cache 。使用 2000 的 cache 大小相比，效果提升了很多。</p>
-<p>另外，注意到用 103M 的 LSTM baseline 已经比 2M 上的复杂方法好很多了，因此认为需要在更大数据集上实验（虽然本文没继续做了）。</p>
-<blockquote>
-<p>一个拿 103M 训出来的 LSTM 已经强过 2M 上比较复杂的模型了。说明数据真实王道。学术上用相同数据量比较，为了公平。实际做出产品的话，没人管公平不公平了。</p>
-</blockquote>
-<h2>结论</h2>
-<p>本文中的模型从技术上虽然属于 memory-augmented RNN ，但其结构可以避免学习内存查找部分（memory lookup component），因此计算代价十分低，也很容易加到现有的模型上。</p>
-<hr class="footnotes-sep">
-<section class="footnotes">
-<ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>Sainbayar Sukhbaatar, Szlam Arthur, Jason Weston, and Rob Fergus. End-to-end memory networks. In NIPS, 2015. <a href="#fnref1" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn2" class="footnote-item"><p>Joshua T Goodman. A bit of progress in language modeling. Computer Speech &amp; Language, 2001. <a href="#fnref2" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn3" class="footnote-item"><p>Stephen Merity, Caiming Xiong, James Bradbury, and Richard Socher. Pointer sentinel mixture models. arXiv
-preprint arXiv:1609.07843, 2016. <a href="#fnref3" class="footnote-backref">↩</a></p>
-</li>
-</ol>
-</section>
-
-        </div>
-        <footer class="article-footer">
-            
-
-
-
-    <a data-url="https://crvdgc.github.io/2018/08/11/continuous-cache/" data-id="ckidj0mvd0002eww2w3ollro7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-        </footer>
+        <p class="article-excerpt">
+            据新华网报道，中科大潘建伟团队制作的新量子计算机九章，比谷歌量子计算机快一百亿倍。本文将从计算理论的角度来说明，该如何理解这一结论。
+首先一个重要的问题是，九章是量子计算机吗？九章的确有电子元件，并且使用了量子效应，可以执行一个量子算法，为何不能称为量子计算机呢？
+要回答这个问题，首先可以考虑一下，耳机是计算机吗？毕竟耳机内部也包含电子元件，并且完成了将电流信号转化成声音信号的算法，但我们通常不将
+        </p>
     </div>
 </article>
-
-    <section id="comments">
     
-    </section>
+        </div>
+    
+
+
+    </div></section>
 
 
 
@@ -333,29 +222,6 @@ preprint arXiv:1609.07843, 2016. <a href="#fnref3" class="footnote-backref">↩<
             
         </ul>
     </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2018/08/11/adorable-lores/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">下一篇</strong>
-        <p class="article-nav-title">
-        
-            Adorable lores
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
-    
-    
-        <a href="/2018/08/04/kuhn-cache/" id="article-nav-older" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">Cache Method in n-gram</p>
-        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
-        </a>
-    
-</nav>
-
     
     <div class="widgets-container">
         
